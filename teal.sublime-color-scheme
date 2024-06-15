@@ -1,0 +1,31 @@
+{
+    "name": "MyLang",
+    "variables": {},
+    "globals": {},
+    "rules": [
+        {
+            "scope": "keyword.control.mylang",
+            "foreground": "var(blue)"
+        },
+        {
+            "scope": "constant.language.mylang",
+            "foreground": "var(magenta)"
+        },
+        {
+            "scope": "string.quoted.double.mylang",
+            "foreground": "var(green)"
+        },
+        {
+            "scope": "constant.numeric.mylang",
+            "foreground": "var(red)"
+        },
+        {
+            "scope": "comment.line.number-sign.mylang",
+            "foreground": "var(grey)"
+        },
+        {
+            "scope": "variable.other.mylang",
+            "foreground": "var(orange)"
+        }
+    ]
+}

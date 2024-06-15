@@ -1,0 +1,18 @@
+%YAML 1.2
+---
+file_extensions:
+  - tl
+scope: source.teal
+
+
+contexts:
+  prototype:
+    - include: comments
+
+  main:
+    - match: ''
+      push: [variable]
+
+  variable:
+    - match: '\b[a-zA-Z_]\w*\b'
+      scope: variable.other.teal
