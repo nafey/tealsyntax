@@ -5,5 +5,10 @@
 
     -- Comment
 -- ^ - comments
---  ^^^^^^ comment.teal
+--  ^^ punctuation.definition.comment.teal
+--     ^^^^^^^ comment.line.teal
+
+    a
+--  ^ - variable
+--  ^ variable.other.teal
 

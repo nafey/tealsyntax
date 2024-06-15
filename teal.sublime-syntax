@@ -14,9 +14,14 @@ contexts:
 
   variable:
     - match: '\b[A-Za-z_][A-Za-z_0-9]*\b'
-      scope: variable.teal
+      scope: variable.other.teal
 
   comments:
-    - match: '--.*'
-      scope: comment.teal
+    - match: '--'
+      scope: punctuation.definition.comment.teal
+      push: comment-line
 
+  comment-line:
+    - meta_scope: comment.line.teal
+    - match: '.*'
+      pop: 1
