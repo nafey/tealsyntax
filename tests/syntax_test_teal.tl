@@ -11,4 +11,9 @@
     a
 --  ^ - variable
 --  ^ variable.other.teal
+    1
+--  ^ - numeric
+--  ^ constant.numeric.teal
 
+
+    1.1

@@ -10,6 +10,7 @@ contexts:
 
   main:
     - include: variable
+    - include: numeric
 
 
   variable:
@@ -25,3 +26,7 @@ contexts:
     - meta_scope: comment.line.teal
     - match: '.*'
       pop: 1
+
+  numeric:
+    - match: '\b[0-9]+\b'
+      scope: constant.numeric.teal
