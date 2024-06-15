@@ -1,5 +1,5 @@
 {
-    "name": "MyLang",
+    "name": "Teal",
     "variables": {},
     "globals": {},
     "rules": [
@@ -20,7 +20,7 @@
             "foreground": "var(red)"
         },
         {
-            "scope": "comment.line.number-sign.mylang",
+            "scope": "comment.teal",
             "foreground": "var(grey)"
         },
         {

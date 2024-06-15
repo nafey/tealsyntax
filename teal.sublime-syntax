@@ -4,120 +4,19 @@ file_extensions:
   - tl
 scope: source.teal
 
-variables:
-  identifier_start: '[A-Za-z_]'
-  identifier_char: '[A-Za-z0-9_]'
-  identifier_break: (?!{{identifier_char}})
-  name: (?:{{identifier_start}}{{identifier_char}}*)
-  dec_exponent: (?:[Ee][-+]?\d*)
-  hex_exponent: (?:[Pp][-+]?\d*)
-
-
 contexts:
   prototype:
     - include: comments
 
   main:
     - include: variable
-    - include: number
-    - include: string
+
 
   variable:
-    - match: '{{name}}'
-      scope: variable.other.teal
+    - match: '\b[A-Za-z_][A-Za-z_0-9]*\b'
+      scope: variable.teal
 
+  comments:
+    - match: '--.*'
+      scope: comment.teal
 
-
-  number:
-    - match: (0[Xx])(\h*(?:(\.)\h*{{hex_exponent}}?|{{hex_exponent}}))
-      scope: meta.number.float.hexadecimal.teal
-      captures:
-        1: constant.numeric.base.teal
-        2: constant.numeric.value.teal
-        3: punctuation.separator.decimal.teal
-      pop: 1
-
-    - match: (0[Xx])(\h+)
-      scope: meta.number.integer.hexadecimal.teal
-      captures:
-        1: constant.numeric.base.teal
-        2: constant.numeric.value.teal
-      pop: 1
-
-    - match: \d+(?:(\.)\d*{{dec_exponent}}?|{{dec_exponent}})|(\.)\d+{{dec_exponent}}?
-      scope: meta.number.float.decimal.teal constant.numeric.value.teal
-      captures:
-        1: punctuation.separator.decimal.teal
-        2: punctuation.separator.decimal.teal
-      pop: 1
-
-    - match: \d+
-      scope: meta.number.integer.decimal.teal constant.numeric.value.teal
-      pop: 1
-
-  string:
-    - include: single-quoted-string
-    - include: double-quoted-string
-    - include: multiline-string
-
-  single-quoted-string:
-    - match: \'
-      scope: punctuation.definition.string.begin.teal
-      set: single-quoted-string-body
-
-  single-quoted-string-body:
-    - meta_include_prototype: false
-    - meta_scope: meta.string.teal string.quoted.single.teal
-    - include: string-content
-    - match: \'
-      scope: punctuation.definition.string.end.teal
-      pop: 1
-
-  double-quoted-string:
-    - match: \"
-      scope: punctuation.definition.string.begin.teal
-      set: double-quoted-string-body
-
-  double-quoted-string-body:
-    - meta_include_prototype: false
-    - meta_scope: meta.string.teal string.quoted.double.teal
-    - include: string-content
-    - match: \"
-      scope: punctuation.definition.string.end.teal
-      pop: 1
-
-  multiline-string:
-    - match: \[(=*)\[
-      scope: punctuation.definition.string.begin.teal
-      set: multiline-string-body
-
-  multiline-string-body:
-    - meta_scope: meta.string.teal string.quoted.multiline.teal
-    - meta_include_prototype: false
-    - match: \]\1\]
-      scope: punctuation.definition.string.end.teal
-      pop: 1
-
-  string-content:
-    - match: \\[abfnrtv\\'"\[\]\n]
-      scope: constant.character.escape.teal
-
-    - match: \\x\h\h
-      scope: constant.character.escape.hexadecimal.teal
-
-    - match: \\\d{1,3}
-      scope: constant.character.escape.decimal.teal
-
-    - match: \\u\{\h+\}
-      scope: constant.character.escape.unicode.teal
-
-    - match: \\z
-      push:
-        - meta_scope: constant.character.escape.whitespace.teal
-        - include: else-pop
-
-    - match: \n
-      scope: invalid.illegal.unclosed-string.teal
-      pop: 1
-    - match: \\.
-      scope: invalid.illegal.invalid-escape.teal
