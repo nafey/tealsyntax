@@ -41,3 +41,18 @@
 --    ^ keyword.operator.assignment.teal
 --      ^ constant.numeric.teal
 
+    a = 1 + 1 - 1 * 1 / 1
+--        ^ keyword.operator.arithmetic.teal 
+--            ^ keyword.operator.arithmetic.teal
+--                ^ keyword.operator.arithmetic.teal
+--                    ^ keyword.operator.arithmetic.teal
+ 
+    a = (1 + 1) 
+--      ^ meta.group.teal punctuation.section.group.begin.teal
+--       ^ meta.group.teal constant.numeric.teal
+--            ^ meta.group.teal punctuation.section.group.end.teal
+
+    a = (1 + (b / 2) - 1) * c
+--           ^ meta.group.teal meta.group.teal punctuation.section.group.begin.teal
+--                          ^ variable.other.teal
+

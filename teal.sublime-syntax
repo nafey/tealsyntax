@@ -72,9 +72,21 @@ contexts:
     - include: variable
     - match: '='
       scope: keyword.operator.assignment.teal
+    - match: '[+\-*/]'
+      scope: keyword.operator.arithmetic.teal
     - include: numeric
+    - match: '\('
+      scope: punctuation.section.group.begin.teal
+      push: paren-expression
 
 
+  paren-expression:
+    - meta_include_prototype: false
+    - meta_scope: meta.group.teal
+    - include: expression
+    - match: '\)'
+      scope: punctuation.section.group.end.teal
+      pop: 1
 
 
 
