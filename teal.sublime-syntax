@@ -9,10 +9,11 @@ contexts:
     - include: comments
 
   main:
+    - include: keywords
+    - include: expression
     - include: variable
     - include: numeric
     - include: string
-
 
   variable:
     - match: '\b[A-Za-z_][A-Za-z_0-9]*\b'
@@ -43,7 +44,7 @@ contexts:
 
   double-string-body:
     - meta_include_prototype: false
-    - meta_scope: string.quoted.double.teal
+    - meta_scope: string.quoted.double.teal meta.string.teal
     - match: \"
       scope: punctuation.defintion.string.end.teal
       pop: 1
@@ -55,10 +56,40 @@ contexts:
 
   single-string-body:
     - meta_include_prototype: false
-    - meta_scope: string.quoted.single.teal
+    - meta_scope: string.quoted.single.teal meta.string.teal
     - match: \'
       scope: punctuation.defintion.string.end.teal
       pop: 1
+
+  keywords:
+    - match: 'for'
+      scope: keyword.control.loop.teal
+    - match: 'if'
+      scope: keyword.control.conditional.teal
+
+
+  expression:
+    - include: variable
+    - match: '='
+      scope: keyword.operator.assignment.teal
+    - include: numeric
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
