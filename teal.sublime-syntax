@@ -11,6 +11,7 @@ contexts:
   main:
     - include: variable
     - include: numeric
+    - include: string
 
 
   variable:
@@ -28,5 +29,36 @@ contexts:
       pop: 1
 
   numeric:
-    - match: '\b[0-9]+\b'
+    - match: '\b\d+\.?\d*\b'
       scope: constant.numeric.teal
+
+  string:
+    - include: double-string
+    - include: single-string
+
+  double-string:
+    - match: \"
+      scope: punctuation.definition.string.begin.teal
+      push: double-string-body
+
+  double-string-body:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.teal
+    - match: \"
+      scope: punctuation.defintion.string.end.teal
+      pop: 1
+
+  single-string:
+    - match: \'
+      scope: punctuation.definition.string.begin.teal
+      push: single-string-body
+
+  single-string-body:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.single.teal
+    - match: \'
+      scope: punctuation.defintion.string.end.teal
+      pop: 1
+
+
+
