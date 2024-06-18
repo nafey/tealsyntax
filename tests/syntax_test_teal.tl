@@ -132,5 +132,12 @@
 --     ^ meta.brackets.teal punctuation.section.brackets.begin.teal 
 
 
-    foo.bar
-
+    foo.bar()[2]
+--  ^^^ variable.other.teal
+--     ^ punctuation.accessor.teal
+--      ^^^ meta.property.teal variable.other.teal    
+--         ^ meta.property.teal meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+--          ^ meta.property.teal meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
+--           ^ meta.property.teal meta.brackets.teal punctuation.section.brackets.begin.teal
+    
+    as[1]

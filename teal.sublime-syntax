@@ -16,6 +16,10 @@ contexts:
     - include: keywords
     - include: expression
 
+  else-pop:
+    - match: (?=\S)
+      pop: 1
+
   variable:
     - match: '{{name}}'
       scope: variable.other.teal
@@ -113,6 +117,18 @@ contexts:
     - match: '(?=\S)'
       pop: 1
 
+  accessor:
+    - match: \.
+      scope: punctuation.accessor.teal
+      push:
+        - meta_scope: meta.property.teal
+        - include: function-call
+        - include: variable
+        - match: '(?=\S)'
+          pop: 100
+    # - match: '(?=\S)'
+    #   pop: 1
+
   keywords:
     - match: for
       scope: keyword.control.loop.teal
@@ -124,10 +140,11 @@ contexts:
     - include: numeric
 
   atoms:
+    - include: literals
     - include: function-call
     - include: array
+    - include: accessor
     - include: variable
-    - include: literals
 
   expression:
     - include: atoms
