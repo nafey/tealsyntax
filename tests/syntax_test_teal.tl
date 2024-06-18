@@ -77,6 +77,8 @@
 
     a_1
 --  ^^^ variable.other.teal
+    
+
 
     (get_callback)(22) 
 --  ^ meta.group.teal punctuation.section.group.begin.teal
@@ -85,3 +87,26 @@
 --                ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
 --                 ^^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
 --                   ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
+
+
+    foo()()
+--  ^^^ meta.function-call.teal variable.function.teal
+--       ^ meta.group.teal punctuation.section.group.begin.teal
+
+    (array_var)[22]
+--  ^ meta.group.teal punctuation.section.group.begin.teal
+--   ^^^^^^^^^ meta.group.teal variable.other.teal
+--            ^ meta.group.teal punctuation.section.group.end.teal
+--             ^ meta.brackets.teal punctuation.section.brackets.begin.teal
+--              ^^ meta.brackets.teal constant.numeric.teal
+--                ^ meta.brackets.teal punctuation.section.brackets.end.teal
+
+
+    a["foo"]
+--  ^ variable.other.teal
+--   ^ meta.brackets.teal punctuation.section.brackets.begin.teal
+--    ^ meta.brackets.teal string.quoted.double.teal meta.string.teal punctuation.definition.string.begin.teal
+--     ^^^^ meta.brackets.teal string.quoted.double.teal meta.string.teal
+--         ^ meta.brackets.teal punctuation.section.brackets.end.teal
+    
+    foo.bar
