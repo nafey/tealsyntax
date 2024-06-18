@@ -11,7 +11,7 @@ contexts:
   main:
     - include: keywords
     - include: expression
-    - include: variable
+    - include: atoms
     - include: numeric
     - include: string
 
@@ -61,15 +61,35 @@ contexts:
       scope: punctuation.defintion.string.end.teal
       pop: 1
 
+
+  function-call:
+    - match: '\b[A-Za-z_][A-Za-z_0-9]*(?=\s*\(\s*)'
+      scope: meta.function-call.teal variable.function.teal
+      push: function-arguments
+
+
+  function-arguments:
+    - match: \(
+      scope: punctuation.section.group.begin.teal
+      push:
+        - meta_scope: meta.function-call.arguments.teal meta.group.teal
+        - match: \)
+          scope: punctuation.section.group.end.teal
+          pop: 2
+
   keywords:
     - match: 'for'
       scope: keyword.control.loop.teal
     - match: 'if'
       scope: keyword.control.conditional.teal
 
+  atoms:
+    - include: function-call
+    - include: variable
+
 
   expression:
-    - include: variable
+    - include: atoms
     - match: '='
       scope: keyword.operator.assignment.teal
     - match: '[+\-*/]'
@@ -87,6 +107,7 @@ contexts:
     - match: '\)'
       scope: punctuation.section.group.end.teal
       pop: 1
+
 
 
 

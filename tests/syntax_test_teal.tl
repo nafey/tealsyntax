@@ -56,3 +56,7 @@
 --           ^ meta.group.teal meta.group.teal punctuation.section.group.begin.teal
 --                          ^ variable.other.teal
 
+    foo()
+--  ^^^ meta.function-call.teal variable.function.teal
+
+123 
