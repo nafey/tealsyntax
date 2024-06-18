@@ -89,6 +89,14 @@
 --                   ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
 
 
+    foo(1, 2, bar(1, 2))
+--  ^^^ meta.function-call.teal variable.function.teal
+--     ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+--      ^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+--       ^ meta.function-call.arguments.teal meta.group.teal punctuation.separator.comma.teal
+--         ^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+--                ^ meta.function-call.arguments.teal meta.group.teal meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+
     foo()()
 --  ^^^ meta.function-call.teal variable.function.teal
 --       ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
@@ -131,13 +139,14 @@
 --   ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
 --     ^ meta.brackets.teal punctuation.section.brackets.begin.teal 
 
-
-    foo.bar()[2]
+    foo.bar
 --  ^^^ variable.other.teal
---     ^ punctuation.accessor.teal
---      ^^^ meta.property.teal variable.other.teal    
---         ^ meta.property.teal meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
---          ^ meta.property.teal meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
---           ^ meta.property.teal meta.brackets.teal punctuation.section.brackets.begin.teal
-    
-    as[1]
+--     ^ meta.property.teal punctuation.accessor.teal
+--      ^^^ meta.property.teal variable.other.teal
+
+    foo.bar()
+--  ^^^ meta.property.teal variable.other.teal
+--     ^ meta.property.teal punctuation.accessor.teal
+--      ^^^ meta.property.teal meta.function-call.teal variable.function.teal
+--         ^ meta.group.teal punctuation.section.group.begin.teal
+
