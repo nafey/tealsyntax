@@ -4,6 +4,9 @@ file_extensions:
   - tl
 scope: source.teal
 
+variables:
+  name: '\b[A-Za-z_][A-Za-z_0-9]*\b'
+
 contexts:
   prototype:
     - include: comments
@@ -11,12 +14,9 @@ contexts:
   main:
     - include: keywords
     - include: expression
-    - include: atoms
-    - include: numeric
-    - include: string
 
   variable:
-    - match: '\b[A-Za-z_][A-Za-z_0-9]*\b'
+    - match: '{{name}}'
       scope: variable.other.teal
 
   comments:
@@ -63,7 +63,7 @@ contexts:
 
 
   function-call:
-    - match: '\b[A-Za-z_][A-Za-z_0-9]*(?=\s*\(\s*)'
+    - match: '{{name}}(?=\s*\(\s*)'
       scope: meta.function-call.teal variable.function.teal
       push: function-arguments
 
@@ -71,17 +71,33 @@ contexts:
   function-arguments:
     - match: \(
       scope: punctuation.section.group.begin.teal
-      push:
-        - meta_scope: meta.function-call.arguments.teal meta.group.teal
-        - include: arglist
-        - match: \)
-          scope: punctuation.section.group.end.teal
-          pop: 2
+      push: function-argument-inside
+
+  function-argument-inside:
+    - meta_scope: meta.function-call.arguments.teal meta.group.teal
+    - include: arglist
+    - match: \)
+      scope: punctuation.section.group.end.teal
+      pop: 2
+
 
   arglist:
     - include: expression
     - match: ','
       scope: punctuation.separator.comma.teal
+
+  array:
+    - match: '{{name}}(?=\s*\[\s*)'
+      scope: variable.other.teal
+      push:
+        - match: \[
+          scope: punctuation.section.brackets.begin.teal
+          push:
+            - meta_scope: meta.brackets.teal
+            - include: expression
+            - match: \]
+              scope: punctuation.section.brackets.end.teal
+              pop: 2
 
 
   keywords:
@@ -90,9 +106,15 @@ contexts:
     - match: 'if'
       scope: keyword.control.conditional.teal
 
+  literals:
+    - include: string
+    - include: numeric
+
   atoms:
     - include: function-call
+    - include: array
     - include: variable
+    - include: literals
 
 
   expression:
@@ -111,6 +133,9 @@ contexts:
     - meta_include_prototype: false
     - meta_scope: meta.group.teal
     - include: expression
+    - match: '\)(?=\()'
+      scope: punctuation.section.group.end.teal
+      set: function-arguments
     - match: '\)'
       scope: punctuation.section.group.end.teal
       pop: 1
