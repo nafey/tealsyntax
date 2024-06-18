@@ -101,6 +101,12 @@ contexts:
       push:
         - meta_scope: meta.brackets.teal
         - include: expression
+        - match: \](?=\()
+          scope: punctuation.section.brackets.end.teal
+          set: function-arguments
+        - match: '\](?=\[)'
+          scope: punctuation.section.brackets.end.teal
+          set: array-index
         - match: '\]'
           scope: punctuation.section.brackets.end.teal
           pop: 1
@@ -133,6 +139,7 @@ contexts:
     - match: \(
       scope: punctuation.section.group.begin.teal
       push: paren-expression
+
 
   paren-expression:
     - meta_include_prototype: false

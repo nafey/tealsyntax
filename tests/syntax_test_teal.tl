@@ -113,5 +113,24 @@
 --  ^ meta.group.teal punctuation.section.group.begin.teal
 --     ^^^ meta.group.teal meta.group.teal meta.group.teal meta.function-call.teal variable.function.teal
 
+    a[1][1]
+--  ^ variable.other.teal
+--   ^ meta.brackets.teal punctuation.section.brackets.begin.teal
+--    ^ meta.brackets.teal constant.numeric.teal
+--     ^ meta.brackets.teal punctuation.section.brackets.end.teal
+--      ^ meta.brackets.teal punctuation.section.brackets.begin.teal
+--       ^ meta.brackets.teal constant.numeric.teal
+--        ^ meta.brackets.teal punctuation.section.brackets.end.teal
+
+    a[1]()
+--     ^ meta.brackets.teal punctuation.section.brackets.end.teal
+--      ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+
+    a()[1]
+--  ^ meta.function-call.teal variable.function.teal
+--   ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+--     ^ meta.brackets.teal punctuation.section.brackets.begin.teal 
+
+
     foo.bar
 
