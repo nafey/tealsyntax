@@ -73,9 +73,16 @@ contexts:
       scope: punctuation.section.group.begin.teal
       push:
         - meta_scope: meta.function-call.arguments.teal meta.group.teal
+        - include: arglist
         - match: \)
           scope: punctuation.section.group.end.teal
           pop: 2
+
+  arglist:
+    - include: expression
+    - match: ','
+      scope: punctuation.separator.comma.teal
+
 
   keywords:
     - match: 'for'

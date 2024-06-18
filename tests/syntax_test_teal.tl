@@ -58,5 +58,14 @@
 
     foo()
 --  ^^^ meta.function-call.teal variable.function.teal
+--     ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+--      ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
 
-123 
+    foo( bar(x + 22) + 1)
+--  ^^^ meta.function-call.teal variable.function.teal
+--     ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+--       ^^^ meta.function-call.arguments.teal meta.group.teal meta.function-call.teal variable.function.teal
+--          ^ meta.function-call.arguments.teal meta.group.teal meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+
+
+
