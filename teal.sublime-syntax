@@ -73,9 +73,17 @@ contexts:
       push:
         - meta_scope: meta.function-call.arguments.teal meta.group.teal
         - include: arglist
+        - match: \)(?=\()
+          scope: punctuation.section.group.end.teal
+          set: function-arguments
+        - match: '\)(?=\[)'
+          scope: punctuation.section.group.end.teal
+          set: array-index
         - match: \)
           scope: punctuation.section.group.end.teal
-          pop: 2
+          pop: 1
+    - match: (?=\S)
+      pop: 1
 
   arglist:
     - include: expression
@@ -95,7 +103,9 @@ contexts:
         - include: expression
         - match: '\]'
           scope: punctuation.section.brackets.end.teal
-          pop: 2
+          pop: 1
+    - match: '(?=\S)'
+      pop: 1
 
   keywords:
     - match: for
