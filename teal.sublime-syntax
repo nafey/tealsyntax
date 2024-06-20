@@ -30,6 +30,8 @@ contexts:
       push:
         - match: '(?={{name}}\s*\(\s*)'
           set: accessor-function-call
+        - match: '(?={{name}}\s*\[\s*)'
+          set: accessor-function-call
         - match: '(?={{name}})'
           set: accessor-variable
         - include: else-pop
@@ -45,6 +47,11 @@ contexts:
       push: function-arguments
     - include: else-pop
 
+  access-array:
+    - match: '{{name}}(?=\s*\[\s*)'
+      scope: meta.property.teal variable.other.teal
+      push: array-index
+    - include: else-pop
 
   comments:
     - match: '--'

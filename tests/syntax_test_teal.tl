@@ -164,6 +164,12 @@
 --                ^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
 --                 ^ meta.function-call.arguments.teal meta.group.teal punctuation.separator.comma.teal
 
+    foo.bar()[12]
+--          ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
+--           ^ meta.brackets.teal punctuation.section.brackets.begin.teal
 
+    foo.bar()()
+--          ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
+--           ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
 
     a[1, 2]
