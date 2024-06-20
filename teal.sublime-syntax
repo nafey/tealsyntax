@@ -16,8 +16,68 @@ contexts:
     - include: keywords
     - include: expression
 
+  comments:
+    - match: '--'
+      scope: punctuation.definition.comment.teal
+      push: comment-line
+
+  comment-line:
+    - meta_scope: comment.line.teal
+    - match: .*
+      pop: 1
+
   else-pop:
     - match: (?=\S)
+      pop: 1
+
+  keywords:
+    - match: for
+      scope: keyword.control.loop.teal
+    - match: if
+      scope: keyword.control.conditional.teal
+
+  literals:
+    - include: string
+    - include: numeric
+
+
+  atoms:
+    - include: literals
+    - include: function-call
+    - include: array
+    - include: variable
+    - include: accessor
+
+  numeric:
+    - match: \b\d+\.?\d*\b
+      scope: constant.numeric.teal
+
+  string:
+    - include: double-string
+    - include: single-string
+
+  double-string:
+    - match: \"
+      scope: punctuation.definition.string.begin.teal
+      push: double-string-body
+
+  double-string-body:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.double.teal meta.string.teal
+    - match: \"
+      scope: punctuation.defintion.string.end.teal
+      pop: 1
+
+  single-string:
+    - match: \'
+      scope: punctuation.definition.string.begin.teal
+      push: single-string-body
+
+  single-string-body:
+    - meta_include_prototype: false
+    - meta_scope: string.quoted.single.teal meta.string.teal
+    - match: \'
+      scope: punctuation.defintion.string.end.teal
       pop: 1
 
   variable:
@@ -52,49 +112,6 @@ contexts:
       scope: meta.property.teal variable.other.teal
       push: array-index
     - include: else-pop
-
-  comments:
-    - match: '--'
-      scope: punctuation.definition.comment.teal
-      push: comment-line
-
-  comment-line:
-    - meta_scope: comment.line.teal
-    - match: .*
-      pop: 1
-
-  numeric:
-    - match: \b\d+\.?\d*\b
-      scope: constant.numeric.teal
-
-  string:
-    - include: double-string
-    - include: single-string
-
-  double-string:
-    - match: \"
-      scope: punctuation.definition.string.begin.teal
-      push: double-string-body
-
-  double-string-body:
-    - meta_include_prototype: false
-    - meta_scope: string.quoted.double.teal meta.string.teal
-    - match: \"
-      scope: punctuation.defintion.string.end.teal
-      pop: 1
-
-  single-string:
-    - match: \'
-      scope: punctuation.definition.string.begin.teal
-      push: single-string-body
-
-  single-string-body:
-    - meta_include_prototype: false
-    - meta_scope: string.quoted.single.teal meta.string.teal
-    - match: \'
-      scope: punctuation.defintion.string.end.teal
-      pop: 1
-
 
   function-call:
     - match: '{{name}}(?=\s*\(\s*)'
@@ -146,24 +163,6 @@ contexts:
           pop: 1
     - match: '(?=\S)'
       pop: 1
-
-
-  keywords:
-    - match: for
-      scope: keyword.control.loop.teal
-    - match: if
-      scope: keyword.control.conditional.teal
-
-  literals:
-    - include: string
-    - include: numeric
-
-  atoms:
-    - include: literals
-    - include: function-call
-    - include: array
-    - include: variable
-    - include: accessor
 
   expression:
     - include: atoms
