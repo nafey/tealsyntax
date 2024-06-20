@@ -141,7 +141,7 @@
 
     foo.bar
 --  ^^^ variable.other.teal
---     ^ meta.property.teal punctuation.accessor.teal
+--     ^ punctuation.accessor.teal
 --      ^^^ meta.property.teal variable.other.teal
 
     foo.bar.baz.try
@@ -149,7 +149,7 @@
 
     foo.bar()
 --  ^^^ meta.property.teal variable.other.teal
---     ^ meta.property.teal punctuation.accessor.teal
+--     ^ punctuation.accessor.teal
 --      ^^^ meta.property.teal meta.function-call.teal variable.function.teal
 --         ^ meta.group.teal punctuation.section.group.begin.teal
 
@@ -158,4 +158,12 @@
 
     foo.bar(1, 2)
 --          ^ meta.group.teal constant.numeric.teal
---           
+--           ^ meta.function-call.arguments.teal meta.group.teal punctuation.separator.comma.teal           
+
+    foo.bar().baz(1, 2)
+--                ^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+--                 ^ meta.function-call.arguments.teal meta.group.teal punctuation.separator.comma.teal
+
+
+
+    a[1, 2]

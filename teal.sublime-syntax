@@ -28,22 +28,22 @@ contexts:
     - match: '\.'
       scope: punctuation.accessor.teal
       push:
-        - meta_scope: meta.property.teal
-        - match: '{{name}}(?=\s*\(\s*)'
-          scope: meta.function-call.teal variable.function.teal
-          push: function-arguments
-        - match: '{{name}}'
-          scope: variable.other.teal
+        - match: '(?={{name}}\s*\(\s*)'
+          set: accessor-function-call
+        - match: '(?={{name}})'
+          set: accessor-variable
         - include: else-pop
 
   accessor-variable:
     - match: '{{name}}'
-      scope: variable.other.teal
+      scope: meta.property.teal variable.other.teal
+    - include: else-pop
 
   accessor-function-call:
     - match: '{{name}}(?=\s*\(\s*)'
-      scope: meta.function-call.teal variable.function.teal
+      scope: meta.property.teal meta.function-call.teal variable.function.teal
       push: function-arguments
+    - include: else-pop
 
 
   comments:
