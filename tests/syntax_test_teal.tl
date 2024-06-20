@@ -144,9 +144,18 @@
 --     ^ meta.property.teal punctuation.accessor.teal
 --      ^^^ meta.property.teal variable.other.teal
 
+    foo.bar.baz.try
+--            ^ meta.property.teal variable.other.teal
+
     foo.bar()
 --  ^^^ meta.property.teal variable.other.teal
 --     ^ meta.property.teal punctuation.accessor.teal
 --      ^^^ meta.property.teal meta.function-call.teal variable.function.teal
 --         ^ meta.group.teal punctuation.section.group.begin.teal
 
+    foo.bar().baz()
+--            ^^^ meta.property.teal meta.function-call.teal variable.function.teal
+
+    foo.bar(1, 2)
+--          ^ meta.group.teal constant.numeric.teal
+--           

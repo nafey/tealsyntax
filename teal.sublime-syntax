@@ -29,9 +29,22 @@ contexts:
       scope: punctuation.accessor.teal
       push:
         - meta_scope: meta.property.teal
+        - match: '{{name}}(?=\s*\(\s*)'
+          scope: meta.function-call.teal variable.function.teal
+          push: function-arguments
         - match: '{{name}}'
           scope: variable.other.teal
         - include: else-pop
+
+  accessor-variable:
+    - match: '{{name}}'
+      scope: variable.other.teal
+
+  accessor-function-call:
+    - match: '{{name}}(?=\s*\(\s*)'
+      scope: meta.function-call.teal variable.function.teal
+      push: function-arguments
+
 
   comments:
     - match: '--'
@@ -74,6 +87,7 @@ contexts:
     - match: \'
       scope: punctuation.defintion.string.end.teal
       pop: 1
+
 
   function-call:
     - match: '{{name}}(?=\s*\(\s*)'
@@ -126,12 +140,6 @@ contexts:
     - match: '(?=\S)'
       pop: 1
 
-
-
-
-          # pop: 100
-    # - match: '(?=\S)'
-    #   pop: 1
 
   keywords:
     - match: for
