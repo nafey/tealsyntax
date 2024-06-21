@@ -181,13 +181,16 @@
     
     {a, b}
 --    ^ meta.mapping.teal punctuation.separator.field.teal
-    {a = 1, a, b = 23}
+
+    {[a] = 1, b = 23, c = "str"}
+--    ^ meta.mapping.teal variable.other.teal
 
     {a = foo()}
-
-    { "a" = 1}
+--       ^^^ meta.mapping.teal meta.function-call.teal variable.function.teal
 
     a[1, 2]
+--     ^ meta.brackets.teal punctuation.separator.field.teal
+
 
 
 

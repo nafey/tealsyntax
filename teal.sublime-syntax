@@ -41,6 +41,7 @@ contexts:
     - include: string
     - include: numeric
 
+
   atoms:
     - include: literals
     - include: function-call
@@ -65,14 +66,22 @@ contexts:
     - meta_scope: meta.mapping.teal
     - match: \,
       scope: punctuation.separator.field.teal
-    - match: '{{name}}(?=\s*\=\s*)'
-      scope: string.unquoted.key.teal
+    - match: \[
+      scope: meta.brackets.teal punctuation.section.brackets.begin.teal
+      push:
+        - include: expression
+        - match: \]
+          scope: meta.brackets.teal punctuation.section.brackets.end.teal
+          pop: 1
     - match: =
       scope: punctuation.separator.key-value.teal
+    - match: '{{name}}(?=\s*\=\s*)'
+      scope: string.unquoted.key.teal
     - include: expression
     - match: '\}'
       scope: punctuation.section.block.end.teal
       pop: 1
+
 
   numeric:
     - match: \b\d+\.?\d*\b
@@ -166,7 +175,7 @@ contexts:
         - match: '(?={{name}}\s*\(\s*)'
           set: accessor-function-call
         - match: '(?={{name}}\s*\[\s*)'
-          set: accessor-function-call
+          set: accessor-array
         - match: '(?={{name}})'
           set: accessor-variable
         - include: else-pop
@@ -182,17 +191,11 @@ contexts:
       push: function-arguments
     - include: else-pop
 
-  access-array:
+  accessor-array:
     - match: '{{name}}(?=\s*\[\s*)'
       scope: meta.property.teal variable.other.teal
       push: array-index
     - include: else-pop
-
-  assignment:
-    - include: atoms
-    - match: =
-      scope: keyword.operator.assignment.teal
-    - include: expression
 
 
   expression:
