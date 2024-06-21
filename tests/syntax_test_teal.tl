@@ -172,4 +172,22 @@
 --          ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
 --           ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
 
+    ;
+--  ^ punctuation.terminator.statement.lua
+
+    {}
+--  ^ meta.mapping.teal punctuation.section.block.begin.teal
+--   ^ meta.mapping.teal punctuation.section.block.end.teal
+    
+    {a, b}
+--    ^ meta.mapping.teal punctuation.separator.field.teal
+    {a = 1, a, b = 23}
+
+    {a = foo()}
+
+    { "a" = 1}
+
     a[1, 2]
+
+
+

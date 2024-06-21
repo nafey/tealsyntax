@@ -5,6 +5,7 @@ file_extensions:
   - tl
 scope: source.teal
 
+
 variables:
   name: '\b[A-Za-z_][A-Za-z_0-9]*\b'
 
@@ -40,13 +41,38 @@ contexts:
     - include: string
     - include: numeric
 
-
   atoms:
     - include: literals
     - include: function-call
     - include: array
     - include: variable
     - include: accessor
+    - include: table
+    - include: terminator
+    - include: paren-expression
+
+
+  terminator:
+    - match: ;
+      scope: punctuation.terminator.statement.lua
+
+  table:
+    - match: '\{'
+      scope: punctuation.section.block.begin.teal
+      push: table-inside
+
+  table-inside:
+    - meta_scope: meta.mapping.teal
+    - match: \,
+      scope: punctuation.separator.field.teal
+    - match: '{{name}}(?=\s*\=\s*)'
+      scope: string.unquoted.key.teal
+    - match: =
+      scope: punctuation.separator.key-value.teal
+    - include: expression
+    - match: '\}'
+      scope: punctuation.section.block.end.teal
+      pop: 1
 
   numeric:
     - match: \b\d+\.?\d*\b
@@ -84,6 +110,55 @@ contexts:
     - match: '{{name}}'
       scope: variable.other.teal
 
+
+  function-call:
+    - match: '{{name}}(?=\s*\(\s*)'
+      scope: meta.function-call.teal variable.function.teal
+      push: function-arguments
+
+  function-arguments:
+    - match: \(
+      scope: punctuation.section.group.begin.teal
+      push:
+        - meta_scope: meta.function-call.arguments.teal meta.group.teal
+        - include: expression
+        - match: ','
+          scope: punctuation.separator.comma.teal
+        - match: \)(?=\()
+          scope: punctuation.section.group.end.teal
+          set: function-arguments
+        - match: '\)(?=\[)'
+          scope: punctuation.section.group.end.teal
+          set: array-index
+        - match: \)
+          scope: punctuation.section.group.end.teal
+          pop: 1
+    - match: (?=\S)
+      pop: 1
+
+  array:
+    - match: '{{name}}(?=\s*\[\s*)'
+      scope: variable.other.teal
+      push: array-index
+
+  array-index:
+    - match: '\['
+      scope: punctuation.section.brackets.begin.teal
+      push:
+        - meta_scope: meta.brackets.teal
+        - include: expression
+        - match: \](?=\()
+          scope: punctuation.section.brackets.end.teal
+          set: function-arguments
+        - match: '\](?=\[)'
+          scope: punctuation.section.brackets.end.teal
+          set: array-index
+        - match: '\]'
+          scope: punctuation.section.brackets.end.teal
+          pop: 1
+    - match: '(?=\S)'
+      pop: 1
+
   accessor:
     - match: '\.'
       scope: punctuation.accessor.teal
@@ -113,56 +188,12 @@ contexts:
       push: array-index
     - include: else-pop
 
-  function-call:
-    - match: '{{name}}(?=\s*\(\s*)'
-      scope: meta.function-call.teal variable.function.teal
-      push: function-arguments
-
-  function-arguments:
-    - match: \(
-      scope: punctuation.section.group.begin.teal
-      push:
-        - meta_scope: meta.function-call.arguments.teal meta.group.teal
-        - include: arglist
-        - match: \)(?=\()
-          scope: punctuation.section.group.end.teal
-          set: function-arguments
-        - match: '\)(?=\[)'
-          scope: punctuation.section.group.end.teal
-          set: array-index
-        - match: \)
-          scope: punctuation.section.group.end.teal
-          pop: 1
-    - match: (?=\S)
-      pop: 1
-
-  arglist:
+  assignment:
+    - include: atoms
+    - match: =
+      scope: keyword.operator.assignment.teal
     - include: expression
-    - match: ','
-      scope: punctuation.separator.comma.teal
 
-  array:
-    - match: '{{name}}(?=\s*\[\s*)'
-      scope: variable.other.teal
-      push: array-index
-
-  array-index:
-    - match: '\['
-      scope: punctuation.section.brackets.begin.teal
-      push:
-        - meta_scope: meta.brackets.teal
-        - include: expression
-        - match: \](?=\()
-          scope: punctuation.section.brackets.end.teal
-          set: function-arguments
-        - match: '\](?=\[)'
-          scope: punctuation.section.brackets.end.teal
-          set: array-index
-        - match: '\]'
-          scope: punctuation.section.brackets.end.teal
-          pop: 1
-    - match: '(?=\S)'
-      pop: 1
 
   expression:
     - include: atoms
@@ -170,13 +201,14 @@ contexts:
       scope: keyword.operator.assignment.teal
     - match: '[+\-*/]'
       scope: keyword.operator.arithmetic.teal
-    - include: numeric
-    - match: \(
-      scope: punctuation.section.group.begin.teal
-      push: paren-expression
-
 
   paren-expression:
+    - match: \(
+      scope: punctuation.section.group.begin.teal
+      push: paren-expression-inner
+    
+
+  paren-expression-inner:
     - meta_include_prototype: false
     - meta_scope: meta.group.teal
     - include: expression
