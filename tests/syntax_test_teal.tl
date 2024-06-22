@@ -12,6 +12,9 @@
 
     1
 --  ^ constant.numeric.teal
+    -1
+--  ^ keyword.operator.arithmetic.teal
+
 
     1.1
 --  ^^^ constant.numeric.teal
@@ -173,7 +176,7 @@
 --           ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
 
     ;
---  ^ punctuation.terminator.statement.lua
+--  ^ punctuation.terminator.statement.teal
 
     {}
 --  ^ meta.mapping.teal punctuation.section.block.begin.teal
@@ -182,14 +185,30 @@
     {a, b}
 --    ^ meta.mapping.teal punctuation.separator.field.teal
 
+    {a; b}
+--    ^ meta.mapping.teal punctuation.separator.field.teal
+
     {[a] = 1, b = 23, c = "str"}
 --    ^ meta.mapping.teal variable.other.teal
 
     {a = foo()}
 --       ^^^ meta.mapping.teal meta.function-call.teal variable.function.teal
 
-    a[1, 2]
---     ^ meta.brackets.teal punctuation.separator.field.teal
+
+    #a
+--  ^ keyword.operator.length.teal
+
+    not a
+--  ^^^ keyword.operator.logical.teal
+
+
+    function foo(a, b)
+--  ^^^^^^^^ variable.other.teal
+
+    end
+
+
+    {[a] = 1, b = 23, c = "str"}
 
 
 

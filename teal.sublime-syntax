@@ -1,10 +1,12 @@
 %YAML 1.2
 ---
 
+name: Teal
+scope: source.teal
+version: 2
+
 file_extensions:
   - tl
-scope: source.teal
-
 
 variables:
   name: '\b[A-Za-z_][A-Za-z_0-9]*\b'
@@ -15,7 +17,11 @@ contexts:
 
   main:
     - include: keywords
+    - include: statements
     - include: expression
+
+  statements:
+    - include: function-def
 
   comments:
     - match: '--'
@@ -36,6 +42,12 @@ contexts:
       scope: keyword.control.loop.teal
     - match: if
       scope: keyword.control.conditional.teal
+    - match: \#
+      scope: keyword.operator.length.teal
+    - match: not
+      scope: keyword.operator.logical.teal
+    - match: '\.\.\.'
+      scope: constant.language.teal
 
   literals:
     - include: string
@@ -55,7 +67,7 @@ contexts:
 
   terminator:
     - match: ;
-      scope: punctuation.terminator.statement.lua
+      scope: punctuation.terminator.statement.teal
 
   table:
     - match: '\{'
@@ -64,7 +76,7 @@ contexts:
 
   table-inside:
     - meta_scope: meta.mapping.teal
-    - match: \,
+    - match: (\,|\;)
       scope: punctuation.separator.field.teal
     - match: \[
       scope: meta.brackets.teal punctuation.section.brackets.begin.teal
@@ -118,6 +130,16 @@ contexts:
   variable:
     - match: '{{name}}'
       scope: variable.other.teal
+
+
+  function-def:
+    - match: function
+      scope: keyword.declaration.function.teal
+      set: 
+        - match: '{{name}}'
+          scope: entity.name.function.teal
+          pop: 1
+
 
 
   function-call:
