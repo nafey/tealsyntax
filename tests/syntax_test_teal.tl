@@ -58,7 +58,12 @@
     a = (1 + (b / 2) - 1) * c
 --           ^ meta.group.teal meta.group.teal punctuation.section.group.begin.teal
 --                          ^ variable.other.teal
+    a = true
+--      ^^^^ constant.language.boolean.teal
 
+    a = nil
+--      ^^^ constant.language.null.teal
+    
     foo()
 --  ^^^ meta.function-call.teal variable.function.teal
 --     ^ meta.function-call.arguments.teal punctuation.section.group.begin.teal
@@ -175,6 +180,9 @@
 --          ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
 --           ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
 
+    foo:bar()
+--     ^ punctuation.accessor.teal
+
     ;
 --  ^ punctuation.terminator.statement.teal
 
@@ -202,19 +210,26 @@
 --  ^^^ keyword.operator.logical.teal
 
 
-    function foo(a, b)
+    function foo(a, b, ...)
 --  ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
 --  ^^^^^^^^ keyword.declaration.function.teal
 --           ^^^ entity.name.function.teal
 --              ^ punctuation.section.group.begin.teal
 --               ^ variable.parameter.function.teal
 --                ^ punctuation.separator.comma.teal
+--                     ^^^ meta.function.teal meta.block.teal meta.function-call.teal constant.language.lua
         a = 1
 --      ^ meta.function.teal meta.block.teal variable.other.teal
 --        ^ meta.function.teal meta.block.teal keyword.operator.assignment.teal
 --          ^ meta.function.teal meta.block.teal constant.numeric.teal
     end
 --  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
+
+    while true do
+
+        a = 1
+    end
+    
 
 
     {[a] = 1, b = 23, c = "str"}
