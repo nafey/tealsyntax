@@ -203,7 +203,11 @@
 
 
     function foo(a, b)
---  ^^^^^^^^ variable.other.teal
+--  ^^^^^^^^ keyword.declaration.function.teal
+--           ^^^ entity.name.function.teal
+--              ^ punctuation.section.group.begin.teal
+--               ^ variable.parameter.function.teal
+--                ^ punctuation.separator.comma.teal
 
     end
 

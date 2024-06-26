@@ -55,6 +55,7 @@ contexts:
 
 
   atoms:
+
     - include: literals
     - include: function-call
     - include: array
@@ -136,9 +137,26 @@ contexts:
     - match: function
       scope: keyword.declaration.function.teal
       set: 
+        - function-params
+        - function-name
+
+  function-name:
+    - match: '{{name}}'
+      scope: entity.name.function.teal
+      pop: 1
+
+  function-params:
+    - match: '\('
+      scope: punctuation.section.group.begin.teal
+      push:
         - match: '{{name}}'
-          scope: entity.name.function.teal
+          scope: variable.parameter.function.teal
+        - match: \,
+          scope: punctuation.separator.comma.teal
+        - match: \)
+          scope: punctuation.section.group.end.teal
           pop: 1
+    - include: else-pop
 
 
 
@@ -164,8 +182,7 @@ contexts:
         - match: \)
           scope: punctuation.section.group.end.teal
           pop: 1
-    - match: (?=\S)
-      pop: 1
+    - include: else-pop
 
   array:
     - match: '{{name}}(?=\s*\[\s*)'
