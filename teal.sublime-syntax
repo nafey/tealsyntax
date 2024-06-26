@@ -16,12 +16,11 @@ contexts:
     - include: comments
 
   main:
-    - include: keywords
     - include: statements
-    - include: expression
 
   statements:
     - include: function-def
+    - include: expression
 
   comments:
     - match: '--'
@@ -36,6 +35,7 @@ contexts:
   else-pop:
     - match: (?=\S)
       pop: 1
+
 
   keywords:
     - match: for
@@ -55,7 +55,7 @@ contexts:
 
 
   atoms:
-
+    - include: keywords
     - include: literals
     - include: function-call
     - include: array
@@ -137,8 +137,15 @@ contexts:
     - match: function
       scope: keyword.declaration.function.teal
       set: 
+        - function-meta
+        - block-contents
         - function-params
         - function-name
+
+  function-meta:
+    - meta_scope: meta.function.teal
+    - match: ''
+      pop: 1
 
   function-name:
     - match: '{{name}}'
@@ -149,6 +156,7 @@ contexts:
     - match: '\('
       scope: punctuation.section.group.begin.teal
       push:
+        - meta_scope: meta.function-call.teal
         - match: '{{name}}'
           scope: variable.parameter.function.teal
         - match: \,
@@ -158,7 +166,15 @@ contexts:
           pop: 1
     - include: else-pop
 
+  block-contents:
+    - meta_scope: meta.block.teal
+    - include: end
+    - include: statements
 
+  end:
+    - match: \bend\b
+      scope: keyword.control.end.teal
+      pop: 1
 
   function-call:
     - match: '{{name}}(?=\s*\(\s*)'

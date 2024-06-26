@@ -203,13 +203,18 @@
 
 
     function foo(a, b)
+--  ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
 --  ^^^^^^^^ keyword.declaration.function.teal
 --           ^^^ entity.name.function.teal
 --              ^ punctuation.section.group.begin.teal
 --               ^ variable.parameter.function.teal
 --                ^ punctuation.separator.comma.teal
-
+        a = 1
+--      ^ meta.function.teal meta.block.teal variable.other.teal
+--        ^ meta.function.teal meta.block.teal keyword.operator.assignment.teal
+--          ^ meta.function.teal meta.block.teal constant.numeric.teal
     end
+--  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
 
 
     {[a] = 1, b = 23, c = "str"}
