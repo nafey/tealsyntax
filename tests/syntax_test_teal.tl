@@ -44,11 +44,12 @@
 --    ^ keyword.operator.assignment.teal
 --      ^ constant.numeric.teal
 
-    a = 1 + 1 - 1 * 1 / 1
+    a = 1 + 1 - 1 * 1 / 1 % 1
 --        ^ keyword.operator.arithmetic.teal 
 --            ^ keyword.operator.arithmetic.teal
 --                ^ keyword.operator.arithmetic.teal
 --                    ^ keyword.operator.arithmetic.teal
+--                        ^ keyword.operator.arithmetic.teal
  
     a = (1 + 1) 
 --      ^ meta.group.teal punctuation.section.group.begin.teal
@@ -63,7 +64,21 @@
 
     a = nil
 --      ^^^ constant.language.null.teal
+
+    a = 1 // 1
+--        ^^ keyword.operator.arithmetic.teal
+
+    2 >> 2 << 2 & 2 | 2 ~ 2;    
+--    ^^ keyword.operator.bitwise.teal
+--                      ^ keyword.operator.bitwise.teal
     
+    1 .. 2
+--    ^^ keyword.operator.concatenation.teal
+
+    true and false or nil;
+--       ^^^ keyword.operator.logical.teal
+--                 ^^ keyword.operator.logical.teal
+
     foo()
 --  ^^^ meta.function-call.teal variable.function.teal
 --     ^ meta.function-call.arguments.teal punctuation.section.group.begin.teal
@@ -217,7 +232,7 @@
 --              ^ punctuation.section.group.begin.teal
 --               ^ variable.parameter.function.teal
 --                ^ punctuation.separator.comma.teal
---                     ^^^ meta.function.teal meta.block.teal meta.function-call.teal constant.language.lua
+--                     ^^^ meta.function.teal meta.block.teal meta.function-call.teal constant.language.teal
         a = 1
 --      ^ meta.function.teal meta.block.teal variable.other.teal
 --        ^ meta.function.teal meta.block.teal keyword.operator.assignment.teal

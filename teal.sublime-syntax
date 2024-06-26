@@ -171,7 +171,7 @@ contexts:
         - match: \,
           scope: punctuation.separator.comma.teal
         - match: \.\.\.
-          scope: constant.language.lua
+          scope: constant.language.teal
         - match: \)
           scope: punctuation.section.group.end.teal
           pop: 1
@@ -265,11 +265,21 @@ contexts:
 
 
   expression:
-    - include: atoms
     - match: =
       scope: keyword.operator.assignment.teal
-    - match: '[+\-*/]'
+    - match: (?://|[-+*/%^])
       scope: keyword.operator.arithmetic.teal
+    - match: (?:>>|<<|[&|~])
+      scope: keyword.operator.bitwise.teal
+    - match: (?:[=<>~]=)
+      scope: keyword.operator.comparison.teal
+    - match: (?:[<>])
+      scope: keyword.operator.comparison.teal
+    - match: \.\.
+      scope: keyword.operator.concatenation.teal
+    - match: (?:and|or)
+      scope: keyword.operator.logical.teal
+    - include: atoms
 
   paren-expression:
     - match: \(
