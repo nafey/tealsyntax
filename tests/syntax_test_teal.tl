@@ -32,13 +32,6 @@
 --      ^ string.quoted.single.teal punctuation.defintion.string.end.teal
 --  ^^^^^ string.quoted.single.teal meta.string.teal
 
-
-    if 
---  ^^ keyword.control.conditional.teal
-
-    for 
---  ^^^ keyword.control.loop.teal
-
     a = 1
 --  ^ variable.other.teal
 --    ^ keyword.operator.assignment.teal
@@ -212,7 +205,8 @@
 --    ^ meta.mapping.teal punctuation.separator.field.teal
 
     {[a] = 1, b = 23, c = "str"}
---    ^ meta.mapping.teal variable.other.teal
+--  ^ meta.mapping.teal punctuation.section.block.begin.teal
+--   ^ meta.mapping.teal meta.brackets.teal punctuation.section.brackets.begin.teal    
 
     {a = foo()}
 --       ^^^ meta.mapping.teal meta.function-call.teal variable.function.teal
@@ -238,13 +232,27 @@
 --        ^ meta.function.teal meta.block.teal keyword.operator.assignment.teal
 --          ^ meta.function.teal meta.block.teal constant.numeric.teal
     end
+
 --  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
 
-    while true do
+    if true then
+--  ^^ keyword.control.conditional.teal
+--     ^^^^ constant.language.boolean.teal
+--          ^^^^ meta.block.teal keyword.control.conditional.teal
 
         a = 1
+--      ^ meta.block.teal variable.other.teal
+--        ^ meta.block.teal keyword.operator.assignment.teal
+--          ^ meta.block.teal constant.numeric.teal
+
     end
-    
+--  ^^^ meta.block.teal keyword.control.end.teal
+
+  
+    if (a) then 
+        a = 1 
+    end
+
 
 
     {[a] = 1, b = 23, c = "str"}

@@ -16,11 +16,35 @@ contexts:
     - include: comments
 
   main:
+    - include: if-statement
     - include: statements
 
   statements:
+    - include: if-statement
     - include: function-def
     - include: expression
+
+  if-statement:
+    - match: 'if'
+      scope: keyword.control.conditional.teal
+      push: if-then
+
+  if-then:
+    - match: 'then'
+      scope: keyword.control.conditional.teal
+      push: if-body
+    - include: expression
+    - include: else-pop
+
+  if-body:
+    - meta_scope: meta.block.teal
+    - match: 'end'
+      scope: keyword.control.end.teal
+      pop: 2
+    - include: statements
+
+
+
 
   comments:
     - match: '--'
@@ -38,10 +62,6 @@ contexts:
 
 
   keywords:
-    - match: for
-      scope: keyword.control.loop.teal
-    - match: if
-      scope: keyword.control.conditional.teal
     - match: \#
       scope: keyword.operator.length.teal
     - match: not
@@ -140,7 +160,6 @@ contexts:
   variable:
     - match: '{{name}}'
       scope: variable.other.teal
-
 
   function-def:
     - match: function
