@@ -15,16 +15,6 @@ contexts:
   prototype:
     - include: comments
 
-  main:
-    - include: statements
-
-  statements:
-    - include: if-statement
-    - include: function-def
-    - include: expression
-
-
-
   comments:
     - match: '--'
       scope: punctuation.definition.comment.teal
@@ -39,16 +29,15 @@ contexts:
     - match: (?=\S)
       pop: 1
 
-  keywords:
-    - include: boolean
-    - include: nil
-    - include: ellipsis
+  main:
+    - include: statements
 
-  literals:
-    - include: string
-    - include: numeric
+  statements:
+    - include: if-statement
+    - include: function-def
+    - include: expression
 
-  atoms:
+  expression:
     - include: keywords
     - include: operators
     - include: literals
@@ -56,12 +45,17 @@ contexts:
     - include: array
     - include: variable
     - include: table
-    - include: terminator
     - include: paren-expression
 
-  expression:
-    - include: atoms
-    - include: operators
+  keywords:
+    - match: (?:true|false)
+      scope: constant.language.boolean.teal
+    - match: 'nil'
+      scope: constant.language.null.teal
+    - match: '\.\.\.'
+      scope: constant.language.teal
+    - match: ;
+      scope: punctuation.terminator.statement.teal
 
   operators:
     - match: =
@@ -83,23 +77,10 @@ contexts:
     - match: not
       scope: keyword.operator.logical.teal
 
-  terminator:
-    - match: ;
-      scope: punctuation.terminator.statement.teal
+  literals:
+    - include: numeric
+    - include: string
 
-
-
-  boolean:
-    - match: (?:true|false)
-      scope: constant.language.boolean.teal
-
-  nil:
-    - match: 'nil'
-      scope: constant.language.null.teal
-
-  ellipsis:
-    - match: '\.\.\.'
-      scope: constant.language.teal
 
   numeric:
     - match: \b\d+\.?\d*\b
@@ -137,14 +118,8 @@ contexts:
     - match: '{{name}}'
       scope: variable.other.teal
       push:
-      - include: accessor
-      - include: else-pop
-
-
-  block-contents:
-    - meta_scope: meta.block.teal
-    - include: end
-    - include: statements
+        - include: accessor
+        - include: else-pop
 
   end:
     - match: \bend\b
@@ -163,10 +138,10 @@ contexts:
     - match: \[
       scope: meta.brackets.teal punctuation.section.brackets.begin.teal
       push:
-      - include: expression
-      - match: \]
-        scope: meta.brackets.teal punctuation.section.brackets.end.teal
-        pop: 1
+        - include: expression
+        - match: \]
+          scope: meta.brackets.teal punctuation.section.brackets.end.teal
+          pop: 1
     - match: =
       scope: punctuation.separator.key-value.teal
     - match: '{{name}}(?=\s*\=\s*)'
@@ -212,20 +187,20 @@ contexts:
     - match: '\['
       scope: punctuation.section.brackets.begin.teal
       push:
-      - meta_scope: meta.brackets.teal
-      - include: expression
-      - match: \](?=\()
-        scope: punctuation.section.brackets.end.teal
-        set: function-arguments
-      - match: '\](?=\[)'
-        scope: punctuation.section.brackets.end.teal
-        set: array-index
-      - match: '\](?=\.)'
-        scope: punctuation.section.brackets.end.teal
-        set: accessor
-      - match: '\]'
-        scope: punctuation.section.brackets.end.teal
-        pop: 1
+        - meta_scope: meta.brackets.teal
+        - include: expression
+        - match: \](?=\()
+          scope: punctuation.section.brackets.end.teal
+          set: function-arguments
+        - match: '\](?=\[)'
+          scope: punctuation.section.brackets.end.teal
+          set: array-index
+        - match: '\](?=\.)'
+          scope: punctuation.section.brackets.end.teal
+          set: accessor
+        - match: '\]'
+          scope: punctuation.section.brackets.end.teal
+          pop: 1
     - include: else-pop
 
 
@@ -288,15 +263,14 @@ contexts:
     - match: '[\.\:]'
       scope: punctuation.accessor.teal
       push:
-      - match: '(?={{name}}\s*\(\s*)'
-        set: accessor-function-call
-      - match: '(?={{name}}\s*\[\s*)'
-        set: accessor-array
-      - match: '(?={{name}})'
-        set: accessor-variable
-      - include: else-pop
+        - match: '(?={{name}}\s*\(\s*)'
+          set: accessor-function-call
+        - match: '(?={{name}}\s*\[\s*)'
+          set: accessor-array
+        - match: '(?={{name}})'
+          set: accessor-variable
+        - include: else-pop
     - include: else-pop
-
 
   accessor-variable:
     - match: '{{name}}'
@@ -314,8 +288,6 @@ contexts:
       scope: meta.property.teal variable.other.teal
       push: array-index
     - include: else-pop
-
-
 
   paren-expression:
     - match: \(

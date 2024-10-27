@@ -32,6 +32,10 @@
 --      ^ string.quoted.single.teal punctuation.defintion.string.end.teal
 --  ^^^^^ string.quoted.single.teal meta.string.teal
     
+    "and"
+--  ^ string.quoted.double.teal meta.string.teal punctuation.definition.string.begin.teal
+--   ^^^^ string.quoted.double.teal meta.string.teal
+
     true
 --  ^^^^ constant.language.boolean.teal
 
