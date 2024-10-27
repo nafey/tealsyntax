@@ -253,6 +253,12 @@
         a = 1 
     end
 
+    if (true) then
+        function foo()
+            b = 1
+        end
+
+    end
 
 
     {[a] = 1, b = 23, c = "str"}
