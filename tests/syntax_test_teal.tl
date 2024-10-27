@@ -31,6 +31,20 @@
 --  ^ string.quoted.single.teal punctuation.definition.string.begin.teal
 --      ^ string.quoted.single.teal punctuation.defintion.string.end.teal
 --  ^^^^^ string.quoted.single.teal meta.string.teal
+    
+    true
+--  ^^^^ constant.language.boolean.teal
+
+    false 
+--  ^^^^^ constant.language.boolean.teal
+
+    nil;
+--  ^^^ constant.language.null.teal
+
+    ...;
+
+    1;
+--   ^ punctuation.terminator.statement.teal
 
     a = 1
 --  ^ variable.other.teal
@@ -231,7 +245,9 @@
     end
 
 
-    function foo(a, b, ...)
+    function foo(a, ...)
+--  ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
+--           ^^^ entity.name.function.teal meta.function.teal meta.block.teal meta.name.function.teal
         a = 1
     end
 

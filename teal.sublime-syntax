@@ -44,6 +44,41 @@ contexts:
     - include: statements
 
 
+  function-def:
+    - match: function
+      scope: meta.function.teal keyword.declaration.function.teal
+      push: function-name
+
+  function-name:
+    - match: '{{name}}'
+      scope: entity.name.function.teal meta.function.teal meta.block.teal meta.name.function.teal
+      pop: 1
+      push: function-params
+
+  function-params:
+    - match: '\('
+      scope: punctuation.section.group.begin.teal
+      push:
+        - meta_scope: meta.function.teal
+        - match: '{{name}}'
+          scope: variable.parameter.function.teal
+        - match: \,
+          scope: punctuation.separator.comma.teal
+        - match: \.\.\.
+          scope: constant.language.teal
+        - match: \)
+          scope: punctuation.section.group.end.teal
+          pop: 1
+          push: function-body
+    - include: else-pop
+
+  function-body:
+    - meta_scope: meta.block.teal
+    - match: 'end'
+      scope: keyword.control.end.teal
+      pop: 1
+    - include: statements
+
   comments:
     - match: '--'
       scope: punctuation.definition.comment.teal
@@ -72,6 +107,7 @@ contexts:
     - include: nil
     - include: string
     - include: numeric
+    # - include: elipsis
 
 
   atoms:
@@ -123,6 +159,10 @@ contexts:
     - match: 'nil'
       scope: constant.language.null.teal
 
+  elipsis:
+    - match: '...'
+      scope: constant.language.teal
+
   numeric:
     - match: \b\d+\.?\d*\b
       scope: constant.numeric.teal
@@ -159,51 +199,6 @@ contexts:
     - match: '{{name}}'
       scope: variable.other.teal
 
-  function-def:
-    - match: function
-      scope: keyword.declaration.function.teal
-      push: function-name
-      # set:
-      #   - function-meta
-      #   - block-contents
-      #   - function-params
-      #   - function-name
-
-  function-meta:
-    - meta_scope: meta.function.teal
-    - match: ''
-      pop: 1
-
-  function-name:
-    - match: '{{name}}'
-      scope: entity.name.function.teal
-      pop: 1
-      push: function-params
-
-  function-params:
-    - match: '\('
-      scope: punctuation.section.group.begin.teal
-      push:
-        - meta_scope: meta.function-call.teal
-        - match: '{{name}}'
-          scope: variable.parameter.function.teal
-        - match: \,
-          scope: punctuation.separator.comma.teal
-        - match: \.\.\.
-          scope: constant.language.teal
-        - match: \)
-          scope: punctuation.section.group.end.teal
-          pop: 1
-          push: function-body
-
-    - include: else-pop
-
-  function-body:
-    - meta_scope: meta.block.teal
-    - match: 'end'
-      scope: keyword.control.end.teal
-      pop: 1
-    - include: statements
 
   block-contents:
     - meta_scope: meta.block.teal
