@@ -121,8 +121,17 @@
 --                                          ^^ keyword.operator.comparison.teal
 
 
-    1 .. 2
---    ^^ keyword.operator.concatenation.teal
+    "foo" .. "bar"
+--        ^^ keyword.operator.concatenation.teal
+    
+    x = 42
+--    ^ keyword.operator.assignment.teal
+
+    x[22] = 22;
+--  ^ variable.other.teal
+--   ^ meta.brackets.teal punctuation.section.brackets.begin.teal
+--    ^^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+--      ^ meta.brackets.teal punctuation.section.brackets.end.teal
 
     true and false or nil;
 --       ^^^ keyword.operator.logical.teal
@@ -225,6 +234,12 @@
 --      ^^^ meta.property.teal meta.function-call.teal variable.function.teal
 --         ^ meta.group.teal punctuation.section.group.begin.teal
 
+    foo . bar()
+--  ^^^ variable.other.teal
+--      ^ punctuation.accessor.teal
+--        ^^^ meta.property.teal meta.function-call.teal variable.function.teal
+--           ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
+
     foo.bar().baz()
 --            ^^^ meta.property.teal meta.function-call.teal variable.function.teal
 
@@ -247,18 +262,45 @@
     foo:bar()
 --     ^ punctuation.accessor.teal
 
+    foo(bar() + x[1] + 22 * baz()(1, 2)[22])
+--                                ^ meta.function-call.arguments.teal meta.group.teal meta.function-call.arguments.teal meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+
+    foo.bar[1]
+--  ^^^ variable.other.teal
+--     ^ punctuation.accessor.teal
+--      ^^^ meta.property.teal variable.other.teal
+--         ^ meta.brackets.teal punctuation.section.brackets.begin.teal
+--          ^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+--           ^ meta.brackets.teal punctuation.section.brackets.end.teal
+
     ;
 --  ^ punctuation.terminator.statement.teal
+
+
+    foo() = 12;
+--  ^^^ meta.function-call.teal variable.function.teal
+--        ^ keyword.operator.assignment.teal
 
     {}
 --  ^ meta.mapping.teal punctuation.section.block.begin.teal
 --   ^ meta.mapping.teal punctuation.section.block.end.teal
     
+    {1, 2}
+--    ^ meta.mapping.teal punctuation.separator.field.teal
+
     {a, b}
 --    ^ meta.mapping.teal punctuation.separator.field.teal
 
     {a; b}
 --    ^ meta.mapping.teal punctuation.separator.field.teal
+
+    { 
+--  ^ meta.mapping.teal punctuation.section.block.begin.teal
+        a = 1
+--      ^ meta.mapping.teal string.unquoted.key.teal
+--        ^ meta.mapping.teal punctuation.separator.key-value.teal
+--          ^ meta.mapping.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+    }
 
     {[a] = 1, b = 23, c = "str"}
 --  ^ meta.mapping.teal punctuation.section.block.begin.teal
@@ -266,6 +308,15 @@
 
     {a = foo()}
 --       ^^^ meta.mapping.teal meta.function-call.teal variable.function.teal
+
+    {[a] = 1}
+--  ^ meta.mapping.teal punctuation.section.block.begin.teal
+--   ^ meta.mapping.teal meta.brackets.teal punctuation.section.brackets.begin.teal
+--    ^ meta.mapping.teal variable.other.teal
+--     ^ meta.mapping.teal meta.brackets.teal punctuation.section.brackets.end.teal
+
+    a[1, 2]
+--    ^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 
 
     #a
