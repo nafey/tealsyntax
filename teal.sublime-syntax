@@ -83,8 +83,13 @@ contexts:
 
 
   numeric:
-    - match: \b\d+\.?\d*\b
-      scope: constant.numeric.teal
+    - match: \d+(?:(\.))\d*|(\.)\d+
+      scope: meta.number.float.decimal.teal constant.numeric.value.teal
+      captures:
+        1: punctuation.separator.decimal.teal
+        2: punctuation.separator.decimal.teal
+    - match: \d+
+      scope: meta.number.integer.decimal.teal constant.numeric.value.teal
 
   string:
     - include: double-string

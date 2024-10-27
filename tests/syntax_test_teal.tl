@@ -11,13 +11,14 @@
 --  ^ variable.other.teal
 
     1
---  ^ constant.numeric.teal
+--  ^ meta.number.integer.decimal.teal constant.numeric.value.teal
     -1
 --  ^ keyword.operator.arithmetic.teal
 
 
     1.1
---  ^^^ constant.numeric.teal
+--  ^^^ meta.number.float.decimal.teal constant.numeric.value.teal
+--   ^ constant.numeric.value.teal punctuation.separator.decimal.teal
 
     "str"
 --  ^ string.quoted.double.teal punctuation.definition.string.begin.teal
@@ -57,7 +58,6 @@
     a = 1
 --  ^ variable.other.teal
 --    ^ keyword.operator.assignment.teal
---      ^ constant.numeric.teal
 
     a = 1 + 1 - 1 * 1 / 1 % 1
 --        ^ keyword.operator.arithmetic.teal 
@@ -68,7 +68,7 @@
  
     a = (1 + 1) 
 --      ^ meta.group.teal punctuation.section.group.begin.teal
---       ^ meta.group.teal constant.numeric.teal
+--       ^ meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --            ^ meta.group.teal punctuation.section.group.end.teal
 
     a = (1 + (b / 2) - 1) * c
@@ -109,7 +109,7 @@
     a[1]
 --  ^ variable.other.teal
 --   ^ meta.brackets.teal punctuation.section.brackets.begin.teal 
---    ^ meta.brackets.teal constant.numeric.teal
+--    ^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --     ^ meta.brackets.teal punctuation.section.brackets.end.teal
 
 
@@ -123,17 +123,17 @@
 --   ^^^^^^^^^^^^ meta.group.teal variable.other.teal
 --               ^ meta.group.teal punctuation.section.group.end.teal
 --                ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
---                 ^^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+--                 ^^ meta.function-call.arguments.teal meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --                   ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.end.teal
 
 
     foo(1, 2, bar(1, 2))
 --  ^^^ meta.function-call.teal variable.function.teal
 --     ^ meta.function-call.arguments.teal meta.group.teal punctuation.section.group.begin.teal
---      ^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+--      ^ meta.function-call.arguments.teal meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --       ^ meta.function-call.arguments.teal meta.group.teal punctuation.separator.comma.teal
---         ^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
---                ^ meta.function-call.arguments.teal meta.group.teal meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+--         ^ meta.function-call.arguments.teal meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+--                ^ meta.function-call.arguments.teal meta.group.teal meta.function-call.arguments.teal meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 
     foo()()
 --  ^^^ meta.function-call.teal variable.function.teal
@@ -144,7 +144,7 @@
 --   ^^^^^^^^^ meta.group.teal variable.other.teal
 --            ^ meta.group.teal punctuation.section.group.end.teal
 --             ^ meta.brackets.teal punctuation.section.brackets.begin.teal
---              ^^ meta.brackets.teal constant.numeric.teal
+--              ^^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --                ^ meta.brackets.teal punctuation.section.brackets.end.teal
 
 
@@ -162,10 +162,10 @@
     a[1][1]
 --  ^ variable.other.teal
 --   ^ meta.brackets.teal punctuation.section.brackets.begin.teal
---    ^ meta.brackets.teal constant.numeric.teal
+--    ^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --     ^ meta.brackets.teal punctuation.section.brackets.end.teal
 --      ^ meta.brackets.teal punctuation.section.brackets.begin.teal
---       ^ meta.brackets.teal constant.numeric.teal
+--       ^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --        ^ meta.brackets.teal punctuation.section.brackets.end.teal
 
     a[1]()
@@ -195,11 +195,11 @@
 --            ^^^ meta.property.teal meta.function-call.teal variable.function.teal
 
     foo.bar(1, 2)
---          ^ meta.group.teal constant.numeric.teal
+--          ^ meta.function-call.arguments.teal meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --           ^ meta.function-call.arguments.teal meta.group.teal punctuation.separator.comma.teal           
 
     foo.bar().baz(1, 2)
---                ^ meta.function-call.arguments.teal meta.group.teal constant.numeric.teal
+--                ^ meta.function-call.arguments.teal meta.group.teal meta.number.integer.decimal.teal constant.numeric.value.teal
 --                 ^ meta.function-call.arguments.teal meta.group.teal punctuation.separator.comma.teal
 
     foo.bar()[12]
