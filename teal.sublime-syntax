@@ -62,6 +62,8 @@ contexts:
       scope: keyword.operator.assignment.teal
     - match: (?://|[-+*/%^])
       scope: keyword.operator.arithmetic.teal
+    - match: ~=
+      scope: keyword.operator.comparison.teal
     - match: (?:>>|<<|[&|~])
       scope: keyword.operator.bitwise.teal
     - match: (?:[=<>~]=)

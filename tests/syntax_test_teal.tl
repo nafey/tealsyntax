@@ -16,9 +16,18 @@
 --  ^ keyword.operator.arithmetic.teal
 
 
-    1.1
+    1.1;
 --  ^^^ meta.number.float.decimal.teal constant.numeric.value.teal
 --   ^ constant.numeric.value.teal punctuation.separator.decimal.teal
+
+    1.;
+--  ^^ meta.number.float.decimal.teal constant.numeric.value.teal
+--   ^ constant.numeric.value.teal punctuation.separator.decimal.teal
+
+    .2;
+--  ^^ meta.number.float.decimal.teal constant.numeric.value.teal
+--  ^ constant.numeric.value.teal punctuation.separator.decimal.teal
+
 
     "str"
 --  ^ string.quoted.double.teal punctuation.definition.string.begin.teal
@@ -83,10 +92,35 @@
     a = 1 // 1
 --        ^^ keyword.operator.arithmetic.teal
 
-    2 >> 2 << 2 & 2 | 2 ~ 2;    
+    not true;
+--  ^^^ keyword.operator.logical.teal
+--      ^^^^ constant.language.boolean.teal
+
+    2 + 2 - 2 * 2 / 2 // 2 % 2 ^ 2;   
+--    ^ keyword.operator.arithmetic.teal
+--        ^ keyword.operator.arithmetic.teal
+--            ^ keyword.operator.arithmetic.teal
+--                ^ keyword.operator.arithmetic.teal
+--                    ^^ keyword.operator.arithmetic.teal
+--                         ^ keyword.operator.arithmetic.teal
+--                             ^ keyword.operator.arithmetic.teal
+
+    2 >> 2 << 2 & 2 | 2 ~ 2;
 --    ^^ keyword.operator.bitwise.teal
+--         ^^ keyword.operator.bitwise.teal
+--              ^ keyword.operator.bitwise.teal
+--                  ^ keyword.operator.bitwise.teal
 --                      ^ keyword.operator.bitwise.teal
-    
+
+    2 > 2; 2 < 2; 2 == 2; 2 >= 2; 2 <= 2; 2 ~= 2;
+--    ^ keyword.operator.comparison.teal
+--           ^ keyword.operator.comparison.teal
+--                  ^^ keyword.operator.assignment.teal
+--                          ^^ keyword.operator.comparison.teal
+--                                  ^^ keyword.operator.comparison.teal
+--                                          ^^ keyword.operator.comparison.teal
+
+
     1 .. 2
 --    ^^ keyword.operator.concatenation.teal
 
