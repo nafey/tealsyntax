@@ -45,6 +45,8 @@
 --  ^^^ constant.language.teal
 --     ^ punctuation.terminator.statement.teal
 
+    self;
+
     1;
 --   ^ punctuation.terminator.statement.teal
 
