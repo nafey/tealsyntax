@@ -32,18 +32,15 @@ contexts:
   if-then:
     - match: 'then'
       scope: keyword.control.conditional.teal
+      pop: 1
       push: if-body
-    - include: expression
-    - include: else-pop
 
   if-body:
     - meta_scope: meta.block.teal
     - match: 'end'
       scope: keyword.control.end.teal
-      pop: 2
+      pop: 1
     - include: statements
-
-
 
 
   comments:
@@ -164,11 +161,12 @@ contexts:
   function-def:
     - match: function
       scope: keyword.declaration.function.teal
-      set: 
-        - function-meta
-        - block-contents
-        - function-params
-        - function-name
+      push: function-name
+      # set:
+      #   - function-meta
+      #   - block-contents
+      #   - function-params
+      #   - function-name
 
   function-meta:
     - meta_scope: meta.function.teal
@@ -179,6 +177,7 @@ contexts:
     - match: '{{name}}'
       scope: entity.name.function.teal
       pop: 1
+      push: function-params
 
   function-params:
     - match: '\('
@@ -194,7 +193,16 @@ contexts:
         - match: \)
           scope: punctuation.section.group.end.teal
           pop: 1
+          push: function-body
+
     - include: else-pop
+
+  function-body:
+    - meta_scope: meta.block.teal
+    - match: 'end'
+      scope: keyword.control.end.teal
+      pop: 1
+    - include: statements
 
   block-contents:
     - meta_scope: meta.block.teal

@@ -220,34 +220,22 @@
 
 
     function foo(a, b, ...)
---  ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
---  ^^^^^^^^ keyword.declaration.function.teal
---           ^^^ entity.name.function.teal
---              ^ punctuation.section.group.begin.teal
---               ^ variable.parameter.function.teal
---                ^ punctuation.separator.comma.teal
---                     ^^^ meta.function.teal meta.block.teal meta.function-call.teal constant.language.teal
         a = 1
---      ^ meta.function.teal meta.block.teal variable.other.teal
---        ^ meta.function.teal meta.block.teal keyword.operator.assignment.teal
---          ^ meta.function.teal meta.block.teal constant.numeric.teal
     end
-
---  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
 
     if true then
---  ^^ keyword.control.conditional.teal
---     ^^^^ constant.language.boolean.teal
---          ^^^^ meta.block.teal keyword.control.conditional.teal
 
         a = 1
---      ^ meta.block.teal variable.other.teal
---        ^ meta.block.teal keyword.operator.assignment.teal
---          ^ meta.block.teal constant.numeric.teal
 
     end
---  ^^^ meta.block.teal keyword.control.end.teal
 
+    if true then 
+        if true then
+            if true then
+
+            end
+        end
+    end
   
     if (a) then 
         a = 1 
