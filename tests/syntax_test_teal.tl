@@ -218,16 +218,23 @@
     not a
 --  ^^^ keyword.operator.logical.teal
 
+    a = true 
+--  ^ variable.other.teal
+--    ^ keyword.operator.assignment.teal
+--      ^^^^ constant.language.boolean.teal
+
+    if true then
+--  ^^ keyword.control.conditional.teal
+--     ^^^^ constant.language.boolean.teal
+        a = 1
+--      ^ meta.block.teal variable.other.teal
+    end
+
 
     function foo(a, b, ...)
         a = 1
     end
 
-    if true then
-
-        a = 1
-
-    end
 
     if true then 
         if true then

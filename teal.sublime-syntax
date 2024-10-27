@@ -27,13 +27,14 @@ contexts:
   if-statement:
     - match: 'if'
       scope: keyword.control.conditional.teal
-      push: if-then
+      push: if-expr
 
-  if-then:
+  if-expr:
     - match: 'then'
       scope: keyword.control.conditional.teal
       pop: 1
       push: if-body
+    - include: expression
 
   if-body:
     - meta_scope: meta.block.teal
