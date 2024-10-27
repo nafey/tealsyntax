@@ -42,6 +42,8 @@
 --  ^^^ constant.language.null.teal
 
     ...;
+--  ^^^ constant.language.teal
+--     ^ punctuation.terminator.statement.teal
 
     1;
 --   ^ punctuation.terminator.statement.teal

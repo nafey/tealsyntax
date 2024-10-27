@@ -16,7 +16,6 @@ contexts:
     - include: comments
 
   main:
-    - include: if-statement
     - include: statements
 
   statements:
@@ -93,30 +92,22 @@ contexts:
     - match: (?=\S)
       pop: 1
 
-
   keywords:
-    - match: \#
-      scope: keyword.operator.length.teal
-    - match: not
-      scope: keyword.operator.logical.teal
-    - match: '\.\.\.'
-      scope: constant.language.teal
-
-  literals:
     - include: boolean
     - include: nil
+    - include: ellipsis
+
+  literals:
     - include: string
     - include: numeric
-    # - include: elipsis
-
 
   atoms:
     - include: keywords
+    - include: operators
     - include: literals
     - include: function-call
     - include: array
     - include: variable
-    - include: accessor
     - include: table
     - include: terminator
     - include: paren-expression
@@ -138,10 +129,10 @@ contexts:
     - match: \[
       scope: meta.brackets.teal punctuation.section.brackets.begin.teal
       push:
-        - include: expression
-        - match: \]
-          scope: meta.brackets.teal punctuation.section.brackets.end.teal
-          pop: 1
+      - include: expression
+      - match: \]
+        scope: meta.brackets.teal punctuation.section.brackets.end.teal
+        pop: 1
     - match: =
       scope: punctuation.separator.key-value.teal
     - match: '{{name}}(?=\s*\=\s*)'
@@ -159,8 +150,8 @@ contexts:
     - match: 'nil'
       scope: constant.language.null.teal
 
-  elipsis:
-    - match: '...'
+  ellipsis:
+    - match: '\.\.\.'
       scope: constant.language.teal
 
   numeric:
@@ -198,6 +189,9 @@ contexts:
   variable:
     - match: '{{name}}'
       scope: variable.other.teal
+      push:
+      - include: accessor
+      - include: else-pop
 
 
   block-contents:
@@ -229,6 +223,9 @@ contexts:
         - match: '\)(?=\[)'
           scope: punctuation.section.group.end.teal
           set: array-index
+        - match: '\)(?=\.)'
+          scope: punctuation.section.group.end.teal
+          set: accessor
         - match: \)
           scope: punctuation.section.group.end.teal
           pop: 1
@@ -243,31 +240,35 @@ contexts:
     - match: '\['
       scope: punctuation.section.brackets.begin.teal
       push:
-        - meta_scope: meta.brackets.teal
-        - include: expression
-        - match: \](?=\()
-          scope: punctuation.section.brackets.end.teal
-          set: function-arguments
-        - match: '\](?=\[)'
-          scope: punctuation.section.brackets.end.teal
-          set: array-index
-        - match: '\]'
-          scope: punctuation.section.brackets.end.teal
-          pop: 1
-    - match: '(?=\S)'
-      pop: 1
+      - meta_scope: meta.brackets.teal
+      - include: expression
+      - match: \](?=\()
+        scope: punctuation.section.brackets.end.teal
+        set: function-arguments
+      - match: '\](?=\[)'
+        scope: punctuation.section.brackets.end.teal
+        set: array-index
+      - match: '\](?=\.)'
+        scope: punctuation.section.brackets.end.teal
+        set: accessor
+      - match: '\]'
+        scope: punctuation.section.brackets.end.teal
+        pop: 1
+    - include: else-pop
 
   accessor:
     - match: '[\.\:]'
       scope: punctuation.accessor.teal
       push:
-        - match: '(?={{name}}\s*\(\s*)'
-          set: accessor-function-call
-        - match: '(?={{name}}\s*\[\s*)'
-          set: accessor-array
-        - match: '(?={{name}})'
-          set: accessor-variable
-        - include: else-pop
+      - match: '(?={{name}}\s*\(\s*)'
+        set: accessor-function-call
+      - match: '(?={{name}}\s*\[\s*)'
+        set: accessor-array
+      - match: '(?={{name}})'
+        set: accessor-variable
+      - include: else-pop
+    - include: else-pop
+
 
   accessor-variable:
     - match: '{{name}}'
@@ -288,6 +289,10 @@ contexts:
 
 
   expression:
+    - include: atoms
+    - include: operators
+
+  operators:
     - match: =
       scope: keyword.operator.assignment.teal
     - match: (?://|[-+*/%^])
@@ -302,7 +307,10 @@ contexts:
       scope: keyword.operator.concatenation.teal
     - match: (?:and|or)
       scope: keyword.operator.logical.teal
-    - include: atoms
+    - match: \#
+      scope: keyword.operator.length.teal
+    - match: not
+      scope: keyword.operator.logical.teal
 
   paren-expression:
     - match: \(
