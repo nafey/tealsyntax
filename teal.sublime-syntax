@@ -35,6 +35,7 @@ contexts:
   statements:
     - include: if-statement
     - include: function-def
+    - include: do-statement
     - include: expression
 
   expression:
@@ -52,6 +53,8 @@ contexts:
       scope: constant.language.boolean.teal
     - match: 'nil'
       scope: constant.language.null.teal
+    - match: 'return'
+      scope: keyword.control.return.teal
     - match: '\.\.\.'
       scope: constant.language.teal
     - match: ;
@@ -218,6 +221,16 @@ contexts:
           pop: 1
     - include: else-pop
 
+  do-statement:
+    - match: 'do'
+      scope: keyword.control.teal
+      push:
+        - meta_scope: meta.block.teal
+        - match: 'end'
+          scope: keyword.control.end.teal
+          pop: 1
+        - include: statements
+
 
   if-statement:
     - match: 'if'
@@ -229,10 +242,16 @@ contexts:
       scope: keyword.control.conditional.teal
       pop: 1
       push: if-body
+
     - include: expression
 
   if-body:
     - meta_scope: meta.block.teal
+    - match: 'elseif'
+      scope: keyword.control.conditional.teal
+      push:
+        - if-expr
+
     - match: 'end'
       scope: keyword.control.end.teal
       pop: 1
@@ -268,7 +287,7 @@ contexts:
     - include: else-pop
 
   function-body:
-    - meta_scope: meta.block.teal
+    - meta_scope: meta.function.teal meta.block.teal
     - match: 'end'
       scope: keyword.control.end.teal
       pop: 1

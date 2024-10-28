@@ -322,6 +322,17 @@
     #a
 --  ^ keyword.operator.length.teal
 
+    {a, b + c, c};
+--  ^ meta.mapping.teal punctuation.section.block.begin.teal
+--   ^ meta.mapping.teal variable.other.teal
+--    ^ meta.mapping.teal punctuation.separator.field.teal
+--      ^ meta.mapping.teal variable.other.teal
+--        ^ meta.mapping.teal keyword.operator.arithmetic.teal
+--          ^ meta.mapping.teal variable.other.teal
+--           ^ meta.mapping.teal punctuation.separator.field.teal
+--             ^ meta.mapping.teal variable.other.teal
+--              ^ meta.mapping.teal punctuation.section.block.end.teal
+
     not a
 --  ^^^ keyword.operator.logical.teal
 
@@ -335,7 +346,17 @@
 --     ^^^^ constant.language.boolean.teal
         a = 1
 --      ^ meta.block.teal variable.other.teal
+    elseif false then
+--  ^^^^^^ meta.block.teal keyword.control.conditional.teal
+--         ^^^^^ meta.block.teal constant.language.boolean.teal
+--               ^^^^ meta.block.teal meta.block.teal keyword.control.conditional.teal
+        a = 2
     end
+
+    (not nil)
+--  ^ meta.group.teal punctuation.section.group.begin.teal
+--   ^^^ meta.group.teal keyword.operator.logical.teal
+--       ^^^ meta.group.teal constant.language.null.teal
 
 
     function foo(a, ...)
@@ -345,27 +366,36 @@
     end
 
 
+    function foo()
+        return 100
+--      ^^^^^^ meta.function.teal meta.block.teal keyword.control.return.teal
+    end
+
+
     if true then 
         if true then
             if true then
-
+--          ^^ meta.block.teal meta.block.teal meta.block.teal keyword.control.conditional.teal
             end
         end
     end
   
-    if (a) then 
-        a = 1 
-    end
 
     if (true) then
         function foo()
             b = 1
+--          ^ meta.block.teal meta.block.teal meta.function.teal meta.block.teal variable.other.teal
         end
-
     end
 
-
-    {[a] = 1, b = 23, c = "str"}
+    do 
+--  ^^ meta.block.teal keyword.control.teal
+        a = 1
+--      ^ meta.block.teal variable.other.teal
+--        ^ meta.block.teal keyword.operator.assignment.teal
+--          ^ meta.block.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+    end
+--  ^^^ meta.block.teal keyword.control.end.teal
 
 
 
