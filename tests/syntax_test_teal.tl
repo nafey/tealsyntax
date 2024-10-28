@@ -297,23 +297,23 @@
     { 
 --  ^ meta.mapping.teal punctuation.section.block.begin.teal
         a = 1
---      ^ meta.mapping.teal string.unquoted.key.teal
+--      ^ meta.mapping.key.teal string.unquoted.key.teal
 --        ^ meta.mapping.teal punctuation.separator.key-value.teal
 --          ^ meta.mapping.teal meta.number.integer.decimal.teal constant.numeric.value.teal
     }
 
     {[a] = 1, b = 23, c = "str"}
 --  ^ meta.mapping.teal punctuation.section.block.begin.teal
---   ^ meta.mapping.teal meta.brackets.teal punctuation.section.brackets.begin.teal    
+--   ^ meta.mapping.key.teal meta.brackets.teal meta.brackets.teal punctuation.section.brackets.begin.teal
 
     {a = foo()}
 --       ^^^ meta.mapping.teal meta.function-call.teal variable.function.teal
 
     {[a] = 1}
 --  ^ meta.mapping.teal punctuation.section.block.begin.teal
---   ^ meta.mapping.teal meta.brackets.teal punctuation.section.brackets.begin.teal
---    ^ meta.mapping.teal variable.other.teal
---     ^ meta.mapping.teal meta.brackets.teal punctuation.section.brackets.end.teal
+--   ^ meta.mapping.key.teal meta.brackets.teal meta.brackets.teal punctuation.section.brackets.begin.teal
+--    ^ meta.mapping.key.teal meta.brackets.teal variable.other.teal
+--     ^ meta.mapping.key.teal meta.brackets.teal meta.brackets.teal punctuation.section.brackets.end.teal
 
     a[1, 2]
 --    ^ meta.brackets.teal meta.number.integer.decimal.teal constant.numeric.value.teal

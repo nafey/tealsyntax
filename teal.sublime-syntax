@@ -140,23 +140,31 @@ contexts:
 
   table-inside:
     - meta_scope: meta.mapping.teal
+    - match: '\}'
+      scope: punctuation.section.block.end.teal
+      pop: 1
     - match: (\,|\;)
       scope: punctuation.separator.field.teal
     - match: \[
       scope: meta.brackets.teal punctuation.section.brackets.begin.teal
       push:
-        - include: expression
+        - clear_scopes: 1
+        - meta_scope: meta.mapping.key.teal meta.brackets.teal
         - match: \]
           scope: meta.brackets.teal punctuation.section.brackets.end.teal
           pop: 1
+        - include: expression
+    - match: '(?={{name}}\s*\=\s*)'
+      push:
+        - clear_scopes: 1
+        - meta_scope: meta.mapping.key.teal
+        - match: '{{name}}'
+          scope: string.unquoted.key.teal
+          pop: 1
     - match: =
       scope: punctuation.separator.key-value.teal
-    - match: '{{name}}(?=\s*\=\s*)'
-      scope: string.unquoted.key.teal
     - include: expression
-    - match: '\}'
-      scope: punctuation.section.block.end.teal
-      pop: 1
+    - include: else-pop
 
   function-call:
     - match: '{{name}}(?=\s*\(\s*)'
