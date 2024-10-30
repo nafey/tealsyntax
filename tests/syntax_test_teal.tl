@@ -398,5 +398,24 @@
 --  ^^^ meta.block.teal keyword.control.end.teal
 
 
+    while true do 
+--  ^^^^^ meta.block.teal keyword.control.teal
+--        ^^^^ meta.block.teal constant.language.boolean.teal
+--             ^^ meta.block.teal meta.block.teal keyword.control.conditional.teal
+        a = 1
+--      ^ meta.block.teal meta.block.teal variable.other.teal
+--        ^ meta.block.teal meta.block.teal keyword.operator.assignment.teal
+--          ^ meta.block.teal meta.block.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+    end
+--  ^^^ meta.block.teal meta.block.teal keyword.control.end.teal
 
+    repeat
+
+        a = 1
+    until true
+
+    repeat
+
+        a = 1
+    until true
 

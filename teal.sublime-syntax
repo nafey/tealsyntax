@@ -36,6 +36,8 @@ contexts:
     - include: if-statement
     - include: function-def
     - include: do-statement
+    - include: while-statement
+    - include: repeat-statement
     - include: expression
 
   expression:
@@ -231,6 +233,35 @@ contexts:
           pop: 1
         - include: statements
 
+  while-statement:
+    - match: 'while'
+      scope: keyword.control.teal
+      push:
+        - match: 'do'
+          scope: keyword.control.conditional.teal
+          pop: 1
+          push: while-body
+        - include: expression
+
+
+  while-body:
+    - meta_scope: meta.block.teal
+    - match: 'end'
+      scope: keyword.control.end.teal
+      pop: 1
+    - include: statements
+
+  repeat-statement:
+    - match: 'repeat'
+      scope: keyword.control.teal
+      push: repeat-body
+
+  repeat-body:
+    - match: 'until'
+      scope: keyword.control.end.teal
+      pop: 1
+    - include: statements
+    - include: else-pop
 
   if-statement:
     - match: 'if'
@@ -242,16 +273,13 @@ contexts:
       scope: keyword.control.conditional.teal
       pop: 1
       push: if-body
-
     - include: expression
 
   if-body:
     - meta_scope: meta.block.teal
     - match: 'elseif'
       scope: keyword.control.conditional.teal
-      push:
-        - if-expr
-
+      set: if-expr
     - match: 'end'
       scope: keyword.control.end.teal
       pop: 1
