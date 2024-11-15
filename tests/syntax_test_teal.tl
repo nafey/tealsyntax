@@ -423,6 +423,29 @@
 --  ^^^^^ meta.block.teal keyword.control.end.teal
 --        ^^^^ constant.language.boolean.teal
 
+    for i = 1, 5 do
+--  ^^^ keyword.control.loop.teal
+--      ^ variable.other.teal
+--        ^ keyword.operator.assignment.teal
+--          ^ meta.number.integer.decimal.teal constant.numeric.value.teal
+--           ^ punctuation.separator.comma.teal
+--             ^ meta.number.integer.decimal.teal constant.numeric.value.teal
+--               ^^ meta.block.teal keyword.control.teal
 
+        print("Iteration:", i)
+--      ^^^^^ meta.block.teal meta.function-call.teal variable.function.teal
+    end
+--  ^^^ meta.block.teal keyword.control.end.teal
 
+    for x = 1, y, z do end
+--  ^^^ keyword.control.loop.teal
+--      ^ variable.other.teal
+--        ^ keyword.operator.assignment.teal
+--          ^ meta.number.integer.decimal.teal constant.numeric.value.teal
+--           ^ punctuation.separator.comma.teal
+--             ^ variable.other.teal
+--              ^ punctuation.separator.comma.teal
+--                ^ variable.other.teal
+--                  ^^ meta.block.teal keyword.control.teal
+--                     ^^^ meta.block.teal keyword.control.end.teal
 

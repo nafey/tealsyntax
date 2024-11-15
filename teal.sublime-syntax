@@ -35,6 +35,7 @@ contexts:
   statements:
     - include: if-statement
     - include: function-def
+    - include: for-statement
     - include: do-statement
     - include: while-statement
     - include: repeat-statement
@@ -63,6 +64,8 @@ contexts:
       scope: constant.language.teal
     - match: ;
       scope: punctuation.terminator.statement.teal
+    - match: ','
+      scope: punctuation.separator.comma.teal
 
   operators:
     - match: =
@@ -268,6 +271,21 @@ contexts:
   for-statement:
     - match: 'for'
       scope: keyword.control.loop.teal
+
+  for-params:
+    - match: 'do'
+      scope: keyword.control.loop.teal
+      pop: 1
+      push: for-body
+    - include: expression
+
+  for-body:
+    - meta_scope: meta.block.teal
+    - match: 'end'
+      scope: keyword.control.end.teal
+      pop: 1
+    - include: statements
+
 
   if-statement:
     - match: 'if'
