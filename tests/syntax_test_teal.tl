@@ -461,3 +461,9 @@
 --        ^ variable.other.teal
 --          ^ keyword.operator.assignment.teal
 --            ^ meta.number.integer.decimal.teal constant.numeric.value.teal
+
+    goto foo
+--  ^^^^ keyword.control.goto.teal
+
+    break
+--  ^^^^^ keyword.control.break.teal

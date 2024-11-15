@@ -60,8 +60,12 @@ contexts:
       scope: constant.language.null.teal
     - match: 'return'
       scope: keyword.control.return.teal
+    - match: 'break'
+      scope: keyword.control.break.teal
     - match: 'in'
       scope: keyword.control.loop.teal
+    - match: 'goto'
+      scope: keyword.control.goto.teal
     - match: '\.\.\.'
       scope: constant.language.teal
     - match: ;
