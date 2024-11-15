@@ -348,10 +348,14 @@
 --      ^ meta.block.teal variable.other.teal
     elseif false then
 --  ^^^^^^ meta.block.teal keyword.control.conditional.teal
---         ^^^^^ meta.block.teal constant.language.boolean.teal
---               ^^^^ meta.block.teal meta.block.teal keyword.control.conditional.teal
+--         ^^^^^ constant.language.boolean.teal
+--               ^^^^ meta.block.teal keyword.control.conditional.teal
         a = 2
+--      ^ meta.block.teal variable.other.teal
+--        ^ meta.block.teal keyword.operator.assignment.teal
+--          ^ meta.block.teal meta.number.integer.decimal.teal constant.numeric.value.teal
     end
+--  ^^^ meta.block.teal keyword.control.end.teal
 
     (not nil)
 --  ^ meta.group.teal punctuation.section.group.begin.teal
@@ -375,7 +379,7 @@
     if true then 
         if true then
             if true then
---          ^^ meta.block.teal meta.block.teal meta.block.teal keyword.control.conditional.teal
+--          ^^ meta.block.teal meta.block.teal keyword.control.conditional.teal
             end
         end
     end
@@ -384,7 +388,7 @@
     if (true) then
         function foo()
             b = 1
---          ^ meta.block.teal meta.block.teal meta.function.teal meta.block.teal variable.other.teal
+--          ^ meta.block.teal meta.function.teal meta.block.teal variable.other.teal
         end
     end
 
@@ -399,23 +403,26 @@
 
 
     while true do 
---  ^^^^^ meta.block.teal keyword.control.teal
---        ^^^^ meta.block.teal constant.language.boolean.teal
---             ^^ meta.block.teal meta.block.teal keyword.control.conditional.teal
+--  ^^^^^ keyword.control.teal
+--        ^^^^ constant.language.boolean.teal
+--             ^^ meta.block.teal keyword.control.conditional.teal
         a = 1
---      ^ meta.block.teal meta.block.teal variable.other.teal
---        ^ meta.block.teal meta.block.teal keyword.operator.assignment.teal
---          ^ meta.block.teal meta.block.teal meta.number.integer.decimal.teal constant.numeric.value.teal
+--      ^ meta.block.teal variable.other.teal
+--        ^ meta.block.teal keyword.operator.assignment.teal
+--          ^ meta.block.teal meta.number.integer.decimal.teal constant.numeric.value.teal
     end
---  ^^^ meta.block.teal meta.block.teal keyword.control.end.teal
+--  ^^^ meta.block.teal keyword.control.end.teal
 
     repeat
-
+--  ^^^^^^ meta.block.teal keyword.control.teal
         a = 1
+--      ^ meta.block.teal variable.other.teal
+--        ^ meta.block.teal keyword.operator.assignment.teal
+--          ^ meta.block.teal meta.number.integer.decimal.teal constant.numeric.value.teal
     until true
+--  ^^^^^ meta.block.teal keyword.control.end.teal
+--        ^^^^ constant.language.boolean.teal
 
-    repeat
 
-        a = 1
-    until true
+
 

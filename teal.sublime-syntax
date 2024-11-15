@@ -57,6 +57,8 @@ contexts:
       scope: constant.language.null.teal
     - match: 'return'
       scope: keyword.control.return.teal
+    - match: 'in'
+      scope: keyword.control.loop.teal
     - match: '\.\.\.'
       scope: constant.language.teal
     - match: ;
@@ -243,7 +245,6 @@ contexts:
           push: while-body
         - include: expression
 
-
   while-body:
     - meta_scope: meta.block.teal
     - match: 'end'
@@ -257,11 +258,16 @@ contexts:
       push: repeat-body
 
   repeat-body:
+    - meta_scope: meta.block.teal
     - match: 'until'
       scope: keyword.control.end.teal
       pop: 1
     - include: statements
     - include: else-pop
+
+  for-statement:
+    - match: 'for'
+      scope: keyword.control.loop.teal
 
   if-statement:
     - match: 'if'
