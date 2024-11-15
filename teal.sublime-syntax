@@ -54,6 +54,8 @@ contexts:
   keywords:
     - match: (?:true|false)
       scope: constant.language.boolean.teal
+    - match: 'local'
+      scope: storage.modifier.teal
     - match: 'nil'
       scope: constant.language.null.teal
     - match: 'return'
@@ -64,8 +66,7 @@ contexts:
       scope: constant.language.teal
     - match: ;
       scope: punctuation.terminator.statement.teal
-    - match: ','
-      scope: punctuation.separator.comma.teal
+
 
   operators:
     - match: =
@@ -271,12 +272,17 @@ contexts:
   for-statement:
     - match: 'for'
       scope: keyword.control.loop.teal
+      push: for-params
 
   for-params:
     - match: 'do'
       scope: keyword.control.loop.teal
       pop: 1
       push: for-body
+    - match: ','
+      scope: punctuation.separator.comma.teal
+    - match: 'in'
+      scope: keyword.control.loop.teal
     - include: expression
 
   for-body:

@@ -430,7 +430,7 @@
 --          ^ meta.number.integer.decimal.teal constant.numeric.value.teal
 --           ^ punctuation.separator.comma.teal
 --             ^ meta.number.integer.decimal.teal constant.numeric.value.teal
---               ^^ meta.block.teal keyword.control.teal
+--               ^^ meta.block.teal keyword.control.loop.teal
 
         print("Iteration:", i)
 --      ^^^^^ meta.block.teal meta.function-call.teal variable.function.teal
@@ -446,6 +446,18 @@
 --             ^ variable.other.teal
 --              ^ punctuation.separator.comma.teal
 --                ^ variable.other.teal
---                  ^^ meta.block.teal keyword.control.teal
+--                  ^^ meta.block.teal keyword.control.loop.teal
 --                     ^^^ meta.block.teal keyword.control.end.teal
 
+
+    for x, y in a, b do end
+--  ^^^ keyword.control.loop.teal
+--      ^ variable.other.teal
+--       ^ punctuation.separator.comma.teal
+--         ^ variable.other.teal
+--           ^^ keyword.control.loop.teal
+    local x = 1
+--  ^^^^^ storage.modifier.teal
+--        ^ variable.other.teal
+--          ^ keyword.operator.assignment.teal
+--            ^ meta.number.integer.decimal.teal constant.numeric.value.teal
