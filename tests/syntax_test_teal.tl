@@ -465,9 +465,11 @@
 
     local x = 1
 
-    local y
+    local y 
+    local y, x, z
 
-    local b : number
+    local b : number 
+    
     local a : number = 1
 
     local r, g, b : number, number, number = 10, 10, 10

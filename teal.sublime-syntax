@@ -29,13 +29,18 @@ contexts:
     - match: (?=\S)
       pop: 1
 
+  immediately-pop:
+    - match: ''
+      pop: 1
+
+
   main:
     - include: statements
 
   statements:
     - include: if-statement
     - include: function-def
-    - include: decl-statement
+    - include: decl2-statement
     - include: for-statement
     - include: do-statement
     - include: while-statement
@@ -143,27 +148,38 @@ contexts:
         - include: accessor
         - include: else-pop
 
-  decl-statement:
-    - match: (local)\s*({{name}})\s*(:?)\s*({{name}})
-      captures:
-        1: keyword.declaration.teal
-        2: variable.other.teal
-        3: punctuation.separator.type.teal
-        4: meta.type.teal support.type.teal
-    - match: (local)\s*({{name}})
-      captures:
-        1: keyword.declaration.teal
-        2: variable.other.teal
+  decl2-statement:
+    - match: 'local'
+      scope: keyword.declaration.teal
+      push: [decl2-vars-after, decl2-vars]
 
-  decl-lhs:
-    - match: '='
-      scope: keyword.operator.comparison.teal
+  decl2-vars:
+    - match: '{{name}}'
+      scope: meta.binding.name.teal variable.other.readwrite.teal
       pop: 1
+
+  decl2-vars-after:
     - match: ':'
       scope: punctuation.separator.type.teal
+      set: [decl2-types-after, decl2-types]
+    - match: ','
+      scope: punctuation.separator.comma.teal
+      set: [decl2-vars-after, decl2-vars]
     - include: else-pop
 
+  decl2-types:
+    - match: '{{name}}'
+      scope: meta.type.teal support.type.teal
+      pop: 1
 
+  decl2-types-after:
+    - match: '='
+      scope: keyword.operator.assignment.teal
+      pop: 1
+    - match: ','
+      scope: punctuation.separator.comma.teal
+      set: [decl2-types-after, decl2-types]
+    - include: else-pop
 
   table:
     - match: '\{'
