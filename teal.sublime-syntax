@@ -40,7 +40,7 @@ contexts:
   statements:
     - include: if-statement
     - include: function-def
-    - include: decl2-statement
+    - include: decl-statement
     - include: for-statement
     - include: do-statement
     - include: while-statement
@@ -75,6 +75,8 @@ contexts:
       scope: constant.language.teal
     - match: ;
       scope: punctuation.terminator.statement.teal
+    - match: ','
+      scope: punctuation.separator.comma.teal
 
 
   operators:
@@ -98,6 +100,7 @@ contexts:
       scope: keyword.operator.length.teal
     - match: not
       scope: keyword.operator.logical.teal
+
 
   literals:
     - include: numeric
@@ -148,37 +151,44 @@ contexts:
         - include: accessor
         - include: else-pop
 
-  decl2-statement:
+  decl-statement:
     - match: 'local'
       scope: keyword.declaration.teal
-      push: [decl2-vars-after, decl2-vars]
+      push: [decl-vars-after, decl-vars]
 
-  decl2-vars:
+  decl-vars:
+
     - match: '{{name}}'
-      scope: meta.binding.name.teal variable.other.readwrite.teal
+      scope: variable.other.teal
       pop: 1
 
-  decl2-vars-after:
+  decl-vars-after:
     - match: ':'
       scope: punctuation.separator.type.teal
-      set: [decl2-types-after, decl2-types]
+      set: [decl-types-after, decl-types]
     - match: ','
       scope: punctuation.separator.comma.teal
-      set: [decl2-vars-after, decl2-vars]
+      set: [decl-vars-after, decl-vars]
     - include: else-pop
 
-  decl2-types:
+  decl-types:
+    - match: 'number'
+      scope: support.type.number.teal
+      pop: 1
+    - match: 'string'
+      scope: support.type.string.teal
+      pop: 1
     - match: '{{name}}'
-      scope: meta.type.teal support.type.teal
+      scope: support.class.teal
       pop: 1
 
-  decl2-types-after:
+  decl-types-after:
     - match: '='
       scope: keyword.operator.assignment.teal
       pop: 1
     - match: ','
       scope: punctuation.separator.comma.teal
-      set: [decl2-types-after, decl2-types]
+      set: [decl-types-after, decl-types]
     - include: else-pop
 
   table:

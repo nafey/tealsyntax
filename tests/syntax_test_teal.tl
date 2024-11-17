@@ -464,12 +464,28 @@
 --  ^^^^^ keyword.control.break.teal
 
     local x = 1
+--  ^^^^^ keyword.declaration.teal
+--        ^ variable.other.teal
 
     local y 
     local y, x, z
+--  ^^^^^ keyword.declaration.teal
+--        ^ variable.other.teal
+--         ^ punctuation.separator.comma.teal
+--           ^ variable.other.teal
 
     local b : number 
+--  ^^^^^ keyword.declaration.teal
+--        ^ variable.other.teal
+--          ^ punctuation.separator.type.teal
+--            ^^^^^^ support.type.number.teal
+
+    local d : string
+--            ^^^^^^ support.type.string.teal
     
+    local d: Point
+--           ^^^^^ support.class.teal
+
     local a : number = 1
 
     local r, g, b : number, number, number = 10, 10, 10
