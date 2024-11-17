@@ -157,7 +157,6 @@ contexts:
       push: [decl-vars-after, decl-vars]
 
   decl-vars:
-
     - match: '{{name}}'
       scope: variable.other.teal
       pop: 1
@@ -165,31 +164,61 @@ contexts:
   decl-vars-after:
     - match: ':'
       scope: punctuation.separator.type.teal
-      set: [decl-types-after, decl-types]
+      set: [types-after, types]
     - match: ','
       scope: punctuation.separator.comma.teal
       set: [decl-vars-after, decl-vars]
     - include: else-pop
 
-  decl-types:
+  types:
     - match: 'number'
       scope: support.type.number.teal
       pop: 1
     - match: 'string'
       scope: support.type.string.teal
       pop: 1
+    - match: '{{name}}(?=\s*<\s*)'
+      scope: support.class.teal
+      set: generic
     - match: '{{name}}'
       scope: support.class.teal
       pop: 1
+    - include: else-pop
 
-  decl-types-after:
+
+  types-after:
     - match: '='
       scope: keyword.operator.assignment.teal
       pop: 1
     - match: ','
       scope: punctuation.separator.comma.teal
-      set: [decl-types-after, decl-types]
+      set: [types-after, types]
     - include: else-pop
+
+  generic:
+    - match: '<'
+      scope: punctuation.definition.generic.begin.teal
+      push: generic-inside
+    - include: else-pop
+
+
+  generic-inside:
+    - meta_scope: meta.generic.teal
+    - match: 'number'
+      scope: support.type.number.teal
+    - match: 'string'
+      scope: support.type.string.teal
+    - match: ','
+      scope: punctuation.separator.comma.teal
+    - match: '>'
+      scope: punctuation.definition.generic.end.teal
+      pop: 1
+    - match: '<'
+      scope: punctuation.definition.generic.begin.teal
+      push: generic-inside
+    - match: '{{name}}'
+      scope: support.class.teal
+
 
   table:
     - match: '\{'

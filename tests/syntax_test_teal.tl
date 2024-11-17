@@ -487,8 +487,30 @@
 --           ^^^^^ support.class.teal
 
     local a : number = 1
+--            ^^^^^^ support.type.number.teal
 
     local r, g, b : number, number, number = 10, 10, 10
+--        ^ variable.other.teal
+--         ^ punctuation.separator.comma.teal
+--           ^ variable.other.teal
+--                ^
+--                  ^^^^^^ support.type.number.teal
+--                        ^ punctuation.separator.comma.teal
+--                          ^^^^^^ support.type.number.teal
 
+    local t: Tree<number> = nil
+--           ^^^^ support.class.teal
+--               ^ meta.generic.teal punctuation.definition.generic.begin.teal
+--                ^^^^^^ meta.generic.teal support.type.number.teal
+--                      ^ meta.generic.teal punctuation.definition.generic.end.teal
+
+    local r, g, b: Tree<number>, number, Point = nil, 12, {x=3, y=4}
+--                      ^^^^^^ meta.generic.teal support.type.number.teal
+--                                     ^ punctuation.separator.comma.teal
+--                                       ^^^^^ support.class.teal
+
+    local t: Tree<Tree<number, string, Point>, string>
+--                             ^^^^^^ meta.generic.teal meta.generic.teal support.type.string.teal
 
     for x, y in a, b do end
+
