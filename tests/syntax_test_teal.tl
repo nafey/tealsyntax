@@ -456,14 +456,21 @@
 --       ^ punctuation.separator.comma.teal
 --         ^ variable.other.teal
 --           ^^ keyword.control.loop.teal
-    local x = 1
---  ^^^^^ storage.modifier.teal
---        ^ variable.other.teal
---          ^ keyword.operator.assignment.teal
---            ^ meta.number.integer.decimal.teal constant.numeric.value.teal
 
     goto foo
 --  ^^^^ keyword.control.goto.teal
 
     break
 --  ^^^^^ keyword.control.break.teal
+
+    local x = 1
+
+    local y
+
+    local b : number
+    local a : number = 1
+
+    local r, g, b : number, number, number = 10, 10, 10
+
+
+    for x, y in a, b do end

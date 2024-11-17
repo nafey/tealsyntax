@@ -35,6 +35,7 @@ contexts:
   statements:
     - include: if-statement
     - include: function-def
+    - include: decl-statement
     - include: for-statement
     - include: do-statement
     - include: while-statement
@@ -51,11 +52,10 @@ contexts:
     - include: table
     - include: paren-expression
 
+
   keywords:
     - match: (?:true|false)
       scope: constant.language.boolean.teal
-    - match: 'local'
-      scope: storage.modifier.teal
     - match: 'nil'
       scope: constant.language.null.teal
     - match: 'return'
@@ -143,10 +143,27 @@ contexts:
         - include: accessor
         - include: else-pop
 
-  end:
-    - match: \bend\b
-      scope: keyword.control.end.teal
+  decl-statement:
+    - match: (local)\s*({{name}})\s*(:?)\s*({{name}})
+      captures:
+        1: keyword.declaration.teal
+        2: variable.other.teal
+        3: punctuation.separator.type.teal
+        4: meta.type.teal support.type.teal
+    - match: (local)\s*({{name}})
+      captures:
+        1: keyword.declaration.teal
+        2: variable.other.teal
+
+  decl-lhs:
+    - match: '='
+      scope: keyword.operator.comparison.teal
       pop: 1
+    - match: ':'
+      scope: punctuation.separator.type.teal
+    - include: else-pop
+
+
 
   table:
     - match: '\{'
