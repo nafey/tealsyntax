@@ -167,6 +167,8 @@ contexts:
 
   decl-type:
     - meta_scope: meta.type-alias.teal
+    - match: '\s(?=(end))'
+      pop: 1
     - match: 'type'
       scope: keyword.declaration.type.teal
     - match: '{{name}}'
@@ -219,6 +221,11 @@ contexts:
     - include: else-pop
 
   types:
+    - match: 'function'
+      scope: support.type.number.teal
+      push:
+        - include: type-function-params
+      pop: 1
     - match: 'number'
       scope: support.type.number.teal
       pop: 1
@@ -231,6 +238,30 @@ contexts:
     - match: '{{name}}'
       scope: support.class.teal
       pop: 1
+    - include: else-pop
+
+  type-function-params:
+    - match: '\('
+      scope: punctuation.section.group.begin.teal
+      push:
+        - meta_scope: meta.function.teal
+        - match: '{{name}}(?=\:)'
+          scope: variable.parameter.function.teal
+          push:
+            - match: ':'
+              scope: punctuation.separator.type.teal
+            - include: types
+        - match: '{{name}}'
+          scope: variable.parameter.function.teal
+        - match: \,
+          scope: punctuation.separator.comma.teal
+        - match: \.\.\.
+          scope: constant.language.teal
+        - match: \)
+          scope: punctuation.section.group.end.teal
+          pop: 2
+          # this is the only change over function-params
+          # push: function-body
     - include: else-pop
 
 
@@ -448,6 +479,9 @@ contexts:
   function-name:
     - match: '{{name}}'
       scope: entity.name.function.teal meta.function.teal meta.block.teal meta.name.function.teal
+      pop: 1
+      push: function-params
+    - match: '(?=\()'
       pop: 1
       push: function-params
 

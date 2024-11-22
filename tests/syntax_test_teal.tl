@@ -522,6 +522,15 @@
 --      ^ meta.interface.teal meta.block.teal meta.type.teal variable.other.teal
 --       ^ meta.interface.teal meta.block.teal meta.type.teal punctuation.separator.type.teal
 --         ^^^^^^ meta.interface.teal meta.block.teal meta.type.teal support.type.number.teal
+        z: function (x: number, y: number)
+--      ^ meta.interface.teal meta.block.teal meta.type.teal variable.other.teal
+--       ^ meta.interface.teal meta.block.teal meta.type.teal punctuation.separator.type.teal
+--         ^^^^^^^^ meta.interface.teal meta.block.teal meta.type.teal support.type.number.teal
+--                  ^ meta.interface.teal meta.block.teal meta.type.teal meta.function.teal punctuation.section.group.begin.teal
+--                   ^ meta.interface.teal meta.block.teal meta.type.teal meta.function.teal variable.parameter.function.teal
+--                    ^ meta.interface.teal meta.block.teal meta.type.teal meta.function.teal punctuation.separator.type.teal
+--                      ^^^^^^ meta.interface.teal meta.block.teal meta.type.teal meta.function.teal support.type.number.teal
+--                            ^ meta.interface.teal meta.block.teal meta.type.teal meta.function.teal punctuation.separator.comma.teal
     end
 --  ^^^ meta.interface.teal meta.block.teal meta.type.teal keyword.control.end.teal
 
@@ -586,6 +595,27 @@
 
     end
 --  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
+
+    
+    local x : function (x: number, y: Tree<t>)
+--  ^^^^^ storage.modifier.teal
+--        ^ variable.other.teal
+--          ^ punctuation.separator.type.teal
+--            ^^^^^^^^ support.type.number.teal
+--                     ^ meta.function.teal punctuation.section.group.begin.teal
+--                      ^ meta.function.teal variable.parameter.function.teal
+--                       ^ meta.function.teal punctuation.separator.type.teal
+--                         ^^^^^^ meta.function.teal support.type.number.teal
+--                               ^ meta.function.teal punctuation.separator.comma.teal
+--                                 ^ meta.function.teal variable.parameter.function.teal
+--                                  ^ meta.function.teal punctuation.separator.type.teal
+--                                    ^^^^ meta.function.teal support.class.teal
+
+    local z : function (x: number, y: number) 
+        = function sum(x: number, y: number)
+        return x + y
+    end
+    
 
     for x, y in a, b do end
 
