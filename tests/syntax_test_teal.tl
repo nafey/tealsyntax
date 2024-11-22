@@ -613,7 +613,6 @@
 --                                    ^^^^ meta.function.teal support.class.teal
 
     local z : function (x: number, y: number) 
-
         = function (x: number, y: number)
 --      ^ keyword.operator.assignment.teal
 --        ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
@@ -622,8 +621,14 @@
     end
     
     function sum(x: number, y:number) : number
+--  ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
+--           ^^^ entity.name.function.teal meta.function.teal meta.block.teal meta.name.function.teal
+--                                    ^ meta.function.teal meta.block.teal punctuation.separator.type.teal
+--                                      ^^^^^^ meta.function.teal meta.block.teal support.type.number.teal
         return x + y
     end
+--  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
 
     for x, y in a, b do end
+--  ^^^ keyword.control.loop.teal
 

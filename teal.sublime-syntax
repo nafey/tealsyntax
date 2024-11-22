@@ -510,7 +510,12 @@ contexts:
 
   function-body:
     - meta_scope: meta.function.teal meta.block.teal
+    - match: ':'
+      scope: punctuation.separator.type.teal
+      push:
+        - include: types
     - match: 'end'
+
       scope: keyword.control.end.teal
       pop: 1
     - include: statements
