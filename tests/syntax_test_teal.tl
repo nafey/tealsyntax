@@ -595,6 +595,7 @@
 
     end
 --  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
+    
 
     
     local x : function (x: number, y: Tree<t>)
@@ -612,10 +613,17 @@
 --                                    ^^^^ meta.function.teal support.class.teal
 
     local z : function (x: number, y: number) 
-        = function sum(x: number, y: number)
+
+        = function (x: number, y: number)
+--      ^ keyword.operator.assignment.teal
+--        ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
+--                 ^ meta.function.teal punctuation.section.group.begin.teal
         return x + y
     end
     
+    function sum(x: number, y:number) : number
+        return x + y
+    end
 
     for x, y in a, b do end
 
