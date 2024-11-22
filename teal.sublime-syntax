@@ -152,12 +152,29 @@ contexts:
         - include: else-pop
 
   decl-statement:
-    - match: 'local\s(?=record|interface)'
+    - match: '(local|global)\s(?=enum)'
+      scope: storage.modifier.teal
+      push: decl-enum
+
+    - match: '(local|global)\s(?=record|interface)'
       scope: storage.modifier.teal
       push: decl-record
-    - match: 'local'
+    - match: '(local|global)'
       scope: storage.modifier.teal
       push: [decl-vars-after, decl-vars]
+
+  decl-enum:
+    - meta_scope: meta.enum.teal meta.block.teal
+    - match: 'enum'
+      scope: keyword.declaration.enum.teal
+    - match: '{{name}}'
+      scope: entity.name.enum.teal
+      push:
+        - match: end
+          scope: keyword.control.end.teal
+          pop: 2
+        - include: string
+
 
   decl-record:
     - meta_scope: meta.interface.teal meta.block.teal meta.type.teal

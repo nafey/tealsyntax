@@ -539,6 +539,23 @@
 --  ^^^ meta.interface.teal meta.block.teal meta.type.teal keyword.control.end.teal
 
 
+    global x = 3;
+--  ^^^^^^ storage.modifier.teal
+    
+
+    local enum Direction
+--  ^^^^^^ meta.enum.teal meta.block.teal storage.modifier.teal
+--        ^^^^ meta.enum.teal meta.block.teal keyword.declaration.enum.teal
+--             ^^^^^^^^^ meta.enum.teal meta.block.teal entity.name.enum.teal
+        "north"
+--      ^ meta.enum.teal meta.block.teal string.quoted.double.teal meta.string.teal punctuation.definition.string.begin.teal
+--       ^^^^^^ meta.enum.teal meta.block.teal string.quoted.double.teal meta.string.teal
+--             ^ meta.enum.teal meta.block.teal
+        "south"
+        "east"
+        "west"
+    end
+--  ^^^ meta.enum.teal meta.block.teal keyword.control.end.teal
 
 
     for x, y in a, b do end
