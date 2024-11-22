@@ -629,6 +629,18 @@
     end
 --  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
 
+    local record Character<T>
+--                         ^ meta.interface.teal meta.block.teal meta.type.teal meta.generic.teal support.class.teal
+       val: T
+    end
+
+    function sum<T, W>(x: T, y: T) : T
+--               ^ meta.generic.teal support.class.teal
+        return x + y
+    end
+
+
+
     for x, y in a, b do end
 --  ^^^ keyword.control.loop.teal
 

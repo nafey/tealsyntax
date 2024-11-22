@@ -1,6 +1,5 @@
 %YAML 1.2
 ---
-
 name: Teal
 scope: source.teal
 version: 2
@@ -187,11 +186,11 @@ contexts:
     - match: '{{name}}'
       scope: entity.name.enum.teal
       push:
+
         - match: end
           scope: keyword.control.end.teal
           pop: 2
         - include: string
-
 
   decl-record:
     - meta_scope: meta.interface.teal meta.block.teal meta.type.teal
@@ -200,6 +199,9 @@ contexts:
     - match: '{{name}}'
       scope: entity.name.interface.teal
       push:
+        - match: '<'
+          scope: punctuation.definition.generic.begin.teal
+          push: generics-inside
         - match: end
           scope: keyword.control.end.teal
           pop: 2
@@ -486,6 +488,9 @@ contexts:
       push: function-params
 
   function-params:
+    - match: '<'
+      scope: punctuation.definition.generic.begin.teal
+      push: generics-inside
     - match: '\('
       scope: punctuation.section.group.begin.teal
       push:
