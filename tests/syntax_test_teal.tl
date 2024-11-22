@@ -512,10 +512,11 @@
     local t: Tree<Tree<number, string, Point>, string>
 --                             ^^^^^^ meta.generic.teal meta.generic.teal support.type.string.teal
 
-
-    function new(x: number, y: number): Point
-       return nil
+    local record Name 
+        x: Tree<T>
+        y: number
     end
+     
 
 
 
