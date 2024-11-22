@@ -512,11 +512,32 @@
     local t: Tree<Tree<number, string, Point>, string>
 --                             ^^^^^^ meta.generic.teal meta.generic.teal support.type.string.teal
 
+
     local record Name 
+--  ^^^^^^ meta.interface.teal meta.block.teal meta.type.teal storage.modifier.teal
+--        ^^^^^^ meta.interface.teal meta.block.teal meta.type.teal keyword.declaration.teal
+--               ^^^^ meta.interface.teal meta.block.teal meta.type.teal entity.name.interface.teal
         x: Tree<T>
         y: number
+--      ^ meta.interface.teal meta.block.teal meta.type.teal variable.other.teal
+--       ^ meta.interface.teal meta.block.teal meta.type.teal punctuation.separator.type.teal
+--         ^^^^^^ meta.interface.teal meta.block.teal meta.type.teal support.type.number.teal
     end
-     
+--  ^^^ meta.interface.teal meta.block.teal meta.type.teal keyword.control.end.teal
+
+
+    local interface Name
+--  ^^^^^^ meta.interface.teal meta.block.teal meta.type.teal storage.modifier.teal
+--        ^^^^^^^^^ meta.interface.teal meta.block.teal meta.type.teal keyword.declaration.teal
+--                  ^^^^ meta.interface.teal meta.block.teal meta.type.teal entity.name.interface.teal
+        x: string
+--      ^ meta.interface.teal meta.block.teal meta.type.teal variable.other.teal
+--       ^ meta.interface.teal meta.block.teal meta.type.teal punctuation.separator.type.teal
+--         ^^^^^^ meta.interface.teal meta.block.teal meta.type.teal support.type.string.teal
+        y: string
+    end
+--  ^^^ meta.interface.teal meta.block.teal meta.type.teal keyword.control.end.teal
+
 
 
 
