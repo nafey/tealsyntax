@@ -464,18 +464,18 @@
 --  ^^^^^ keyword.control.break.teal
 
     local x = 1
---  ^^^^^ keyword.declaration.teal
+--  ^^^^^ storage.modifier.teal
 --        ^ variable.other.teal
 
     local y 
     local y, x, z
---  ^^^^^ keyword.declaration.teal
+--  ^^^^^ storage.modifier.teal
 --        ^ variable.other.teal
 --         ^ punctuation.separator.comma.teal
 --           ^ variable.other.teal
 
     local b : number 
---  ^^^^^ keyword.declaration.teal
+--  ^^^^^ storage.modifier.teal
 --        ^ variable.other.teal
 --          ^ punctuation.separator.type.teal
 --            ^^^^^^ support.type.number.teal
@@ -567,6 +567,25 @@
 --                         ^ meta.generic.teal support.class.teal
 --                          ^ meta.generic.teal punctuation.definition.generic.end.teal
 
+
+    function sum(x: number, y: Tree<t>)
+--  ^^^^^^^^ meta.function.teal keyword.declaration.function.teal
+--           ^^^ entity.name.function.teal meta.function.teal meta.block.teal meta.name.function.teal
+--              ^ meta.function.teal punctuation.section.group.begin.teal
+--               ^ meta.function.teal variable.parameter.function.teal
+--                ^ meta.function.teal punctuation.separator.type.teal
+--                  ^^^^^^ meta.function.teal support.type.number.teal
+--                        ^ meta.function.teal punctuation.separator.comma.teal
+--                          ^ meta.function.teal variable.parameter.function.teal
+--                           ^ meta.function.teal punctuation.separator.type.teal
+--                             ^^^^ meta.function.teal support.class.teal
+--                                 ^ meta.function.teal meta.generic.teal punctuation.definition.generic.begin.teal
+--                                  ^ meta.function.teal meta.generic.teal support.class.teal
+--                                   ^ meta.function.teal meta.generic.teal punctuation.definition.generic.end.teal
+--                                    ^ meta.function.teal meta.block.teal punctuation.section.group.end.teal
+
+    end
+--  ^^^ meta.function.teal meta.block.teal keyword.control.end.teal
 
     for x, y in a, b do end
 

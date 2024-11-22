@@ -441,7 +441,7 @@ contexts:
 
 
   function-def:
-    - match: function
+    - match: 'function'
       scope: meta.function.teal keyword.declaration.function.teal
       push: function-name
 
@@ -456,6 +456,12 @@ contexts:
       scope: punctuation.section.group.begin.teal
       push:
         - meta_scope: meta.function.teal
+        - match: '{{name}}(?=\:)'
+          scope: variable.parameter.function.teal
+          push:
+            - match: ':'
+              scope: punctuation.separator.type.teal
+            - include: types
         - match: '{{name}}'
           scope: variable.parameter.function.teal
         - match: \,
