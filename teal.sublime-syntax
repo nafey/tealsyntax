@@ -152,16 +152,31 @@ contexts:
         - include: else-pop
 
   decl-statement:
+    - match: '(local|global)\s(?=type)'
+      scope: storage.modifier.teal
+      push: decl-type
     - match: '(local|global)\s(?=enum)'
       scope: storage.modifier.teal
       push: decl-enum
-
     - match: '(local|global)\s(?=record|interface)'
       scope: storage.modifier.teal
       push: decl-record
     - match: '(local|global)'
       scope: storage.modifier.teal
       push: [decl-vars-after, decl-vars]
+
+  decl-type:
+    - meta_scope: meta.type-alias.teal
+    - match: 'type'
+      scope: keyword.declaration.type.teal
+    - match: '{{name}}'
+      scope: entity.name.type.teal
+    - match: '='
+      scope: keyword.operator.assignment.teal
+      push:
+        - include: types
+      pop: 1
+
 
   decl-enum:
     - meta_scope: meta.enum.teal meta.block.teal

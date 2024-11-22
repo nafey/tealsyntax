@@ -557,6 +557,16 @@
     end
 --  ^^^ meta.enum.teal meta.block.teal keyword.control.end.teal
 
+    local type Name = Tree<t>
+--  ^^^^^^ meta.type-alias.teal storage.modifier.teal
+--        ^^^^ meta.type-alias.teal keyword.declaration.type.teal
+--             ^^^^ meta.type-alias.teal entity.name.type.teal
+--                  ^ keyword.operator.assignment.teal
+--                    ^^^^ support.class.teal
+--                        ^ meta.generic.teal punctuation.definition.generic.begin.teal
+--                         ^ meta.generic.teal support.class.teal
+--                          ^ meta.generic.teal punctuation.definition.generic.end.teal
+
 
     for x, y in a, b do end
 
